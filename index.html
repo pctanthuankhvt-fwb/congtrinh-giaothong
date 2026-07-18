@@ -429,9 +429,14 @@
       <button class="btn-close" onclick="closeModal('modal-detail')">✕</button>
     </div>
     <div id="detail-content"></div>
-    <div class="modal-footer">
+    <div class="modal-footer" style="justify-content:space-between;flex-wrap:wrap;gap:8px;">
       <button class="btn-cancel" onclick="closeModal('modal-detail')">Đóng</button>
-      <button class="btn-save" id="btn-add-db" onclick="openModalDB()">+ Thêm diễn biến</button>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button class="btn-save" id="btn-khong-co-db" style="background:var(--gray-600);display:none" onclick="xacNhanKhongCoDBModal()">
+          📋 Không có diễn biến tháng này
+        </button>
+        <button class="btn-save" id="btn-add-db" onclick="openModalDB()">+ Thêm diễn biến</button>
+      </div>
     </div>
   </div>
 </div>
@@ -540,7 +545,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 const SUPABASE_URL = 'https://ogsmeqzaadbptkfihpll.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_jiemX5EFR6BsTl6Kjne1BQ_wB50syVO';
+const SUPABASE_KEY = 'PASTE_YOUR_PUBLISHABLE_KEY_HERE';
 const FUNCTION_URL = 'https://ogsmeqzaadbptkfihpll.supabase.co/functions/v1/gui-email';
  
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -722,22 +727,30 @@ async function openDetail(id) {
   const { data: dbs } = await sb.from('dien_bien')
     .select('*').eq('id_cong_trinh',id).order('ngay_dien_bien',{ascending:false});
  
-  const dbHTML = dbs && dbs.length ? dbs.map(d => `
+  const dbHTML = dbs && dbs.length ? dbs.map(d => {
+    const laKhongCoDB = d.loai_dien_bien === 'khong_co_dien_bien';
+    return `
     <div class="timeline-item">
       <div class="timeline-dot ${d.da_xac_nhan?'confirmed':''}"></div>
       <div class="timeline-date">${fmtDate(d.ngay_dien_bien)}</div>
-      <div class="timeline-card ${d.da_xac_nhan?'confirmed':''}">
-        <div class="timeline-content">${d.noi_dung}</div>
-        <div class="timeline-meta">
-          ${d.so_van_ban?`<span class="timeline-tag">${d.so_van_ban}</span>`:''}
-          ${d.don_vi_thuc_hien?`<span class="timeline-tag unit">${d.don_vi_thuc_hien}</span>`:''}
-          ${badgeHTML(d.trang_thai_cv)}
-        </div>
-        ${d.link_van_ban?`<a class="timeline-link" href="${d.link_van_ban}" target="_blank">🔗 Xem văn bản</a>`:''}
-        ${d.ghi_chu?`<div style="margin-top:8px;font-size:12px;color:var(--gray-600);border-top:1px solid var(--gray-200);padding-top:8px">💡 ${d.ghi_chu}</div>`:''}
+      <div class="timeline-card ${laKhongCoDB?'style="border-color:var(--gray-200);background:var(--gray-50)"':d.da_xac_nhan?'confirmed':''}">
+        ${laKhongCoDB
+          ? `<div class="timeline-content" style="color:var(--gray-400);font-style:italic">
+               📋 Không có diễn biến mới trong tháng ${d.thang_xac_nhan||''}
+             </div>`
+          : `<div class="timeline-content">${d.noi_dung}</div>
+             <div class="timeline-meta">
+               ${d.so_van_ban?`<span class="timeline-tag">${d.so_van_ban}</span>`:''}
+               ${d.don_vi_thuc_hien?`<span class="timeline-tag unit">${d.don_vi_thuc_hien}</span>`:''}
+               ${badgeHTML(d.trang_thai_cv)}
+             </div>
+             ${d.link_van_ban?`<a class="timeline-link" href="${d.link_van_ban}" target="_blank">🔗 Xem văn bản</a>`:''}
+             ${d.ghi_chu?`<div style="margin-top:8px;font-size:12px;color:var(--gray-600);border-top:1px solid var(--gray-200);padding-top:8px">💡 ${d.ghi_chu}</div>`:''}`
+        }
         ${renderXacNhanBox(d, ct)}
       </div>
-    </div>`).join('') : '<p style="color:var(--gray-400);font-size:13px">Chưa có diễn biến nào.</p>';
+    </div>`;
+  }).join('') : '<p style="color:var(--gray-400);font-size:13px">Chưa có diễn biến nào.</p>';
  
   document.getElementById('detail-content').innerHTML = `
     <div class="detail-header">
@@ -754,13 +767,15 @@ async function openDetail(id) {
       <div class="section-title">📅 Diễn biến / Tiến độ (${dbs?dbs.length:0})</div>
       <div class="timeline">${dbHTML}</div>
     </div>`;
-  document.getElementById('btn-add-db').style.display = currentRole!=='Viewer'?'flex':'none';
+  const coQuyen = currentRole !== 'Viewer';
+  document.getElementById('btn-add-db').style.display       = coQuyen ? 'flex' : 'none';
+  document.getElementById('btn-khong-co-db').style.display  = coQuyen ? 'flex' : 'none';
   openModal('modal-detail');
 }
  
 function renderXacNhanBox(d, ct) {
+  // Viewer chỉ xem, không thấy nút
   if (currentRole==='Viewer') {
-    // Viewer chỉ xem thông tin, không thấy nút
     if (!d.da_xac_nhan) return `
       <div class="xacnhan-box">
         <div class="xacnhan-pending-txt">⏳ Chưa xác nhận cập nhật</div>
@@ -768,13 +783,17 @@ function renderXacNhanBox(d, ct) {
   }
  
   if (d.da_xac_nhan) {
-    // Hiển thị đầy đủ: ngày xác nhận + tên người cập nhật + tên người xác nhận
-    const tenCapNhat  = d.nguoi_cap_nhat  ? getTen(d.nguoi_cap_nhat)  : '—';
-    const tenXacNhan  = d.nguoi_xac_nhan  ? getTen(d.nguoi_xac_nhan)  : '—';
+    const tenCapNhat = d.nguoi_cap_nhat ? getTen(d.nguoi_cap_nhat) : '—';
+    const tenXacNhan = d.nguoi_xac_nhan ? getTen(d.nguoi_xac_nhan) : '—';
+    // Phân biệt loại xác nhận
+    const laKhongCoDb = d.loai_dien_bien === 'khong_co_dien_bien';
     return `
       <div class="xacnhan-box done">
         <div class="xacnhan-header">
-          <div class="xacnhan-title">✅ Đã xác nhận cập nhật — ${fmtDate(d.ngay_xac_nhan)}</div>
+          <div class="xacnhan-title">
+            ${laKhongCoDb ? '📋 Đã xác nhận không có diễn biến' : '✅ Đã xác nhận cập nhật'}
+            — ${fmtDate(d.ngay_xac_nhan)}
+          </div>
         </div>
         <div class="xacnhan-people">
           <div class="xacnhan-person">
@@ -787,39 +806,96 @@ function renderXacNhanBox(d, ct) {
       </div>`;
   }
  
-  // Chưa xác nhận — hiển thị nút cho Editor/Admin
+  // Chưa xác nhận — hiển thị 2 nút cho Editor/Admin
+  if (currentRole === 'Viewer') return '';
+  const tenCT = ct.ten_cong_trinh.replace(/'/g,"\\'").replace(/"/g,'&quot;');
+  const noiDung = d.noi_dung.replace(/'/g,"\\'").replace(/"/g,'&quot;').substring(0,100);
   return `
-    <div class="xacnhan-box pending">
+    <div class="xacnhan-box pending" style="flex-direction:column;align-items:flex-start;gap:8px;">
       <div class="xacnhan-pending-txt">⏳ Chưa xác nhận cập nhật</div>
-      <button class="btn-xacnhan" onclick="xacNhanCapNhat('${d.id}','${ct.ten_cong_trinh.replace(/'/g,"\\'")}')">
-        ✅ Xác nhận đã cập nhật
-      </button>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button class="btn-xacnhan" onclick="xacNhanCapNhat('${d.id}','${tenCT}','${noiDung}','thuc_te')">
+          ✅ Xác nhận đã cập nhật
+        </button>
+        <button class="btn-xacnhan" style="background:var(--gray-600)" onclick="xacNhanKhongCoDB('${ct.id}','${tenCT}')">
+          📋 Không có diễn biến tháng này
+        </button>
+      </div>
     </div>`;
 }
  
-async function xacNhanCapNhat(dbId, tenCongTrinh) {
+async function xacNhanCapNhat(dbId, tenCongTrinh, noiDung, loai) {
   const { error } = await sb.from('dien_bien').update({
-    da_xac_nhan:    true,
-    ngay_xac_nhan:  new Date().toISOString(),
-    nguoi_xac_nhan: currentUser.id,
+    da_xac_nhan:      true,
+    ngay_xac_nhan:    new Date().toISOString(),
+    nguoi_xac_nhan:   currentUser.id,
+    loai_dien_bien:   loai || 'thuc_te',
+    thang_xac_nhan:   fmtThang(new Date()),
   }).eq('id', dbId);
   if (error) { showToast('Lỗi xác nhận: '+error.message,'error'); return; }
  
-  // Gửi email thông báo
-  try {
-    await fetch(FUNCTION_URL, {
-      method:  'POST',
-      headers: { 'Content-Type':'application/json', 'Authorization':`Bearer ${SUPABASE_KEY}` },
-      body: JSON.stringify({
-        loai:           'cap_nhat',
-        ten_cong_trinh: tenCongTrinh,
-        nguoi_cap_nhat: getTen(currentUser.id) || currentUser.email,
-      }),
-    });
-  } catch(e) { console.error('Loi gui email:',e); }
- 
-  showToast('Đã xác nhận và gửi thông báo đến các thành viên','success');
+  // Gửi email Loại 1 — chỉ khi là diễn biến thực tế
+  if (loai !== 'khong_co_dien_bien') {
+    try {
+      await fetch(FUNCTION_URL, {
+        method:  'POST',
+        headers: { 'Content-Type':'application/json', 'Authorization':`Bearer ${SUPABASE_KEY}` },
+        body: JSON.stringify({
+          loai:           'cap_nhat',
+          ten_cong_trinh: tenCongTrinh,
+          nguoi_cap_nhat: getTen(currentUser.id) || currentUser.email,
+          noi_dung_tom_tat: noiDung,
+        }),
+      });
+    } catch(e) { console.error('Loi gui email:', e); }
+    showToast('Đã xác nhận và gửi thông báo đến các thành viên', 'success');
+  } else {
+    showToast('Đã xác nhận không có diễn biến tháng này', 'success');
+  }
   await openDetail(currentCTId);
+}
+ 
+function xacNhanKhongCoDBModal() {
+  const ct = allCT.find(x=>x.id===currentCTId);
+  if (ct) xacNhanKhongCoDB(ct.id, ct.ten_cong_trinh);
+}
+ 
+async function xacNhanKhongCoDB(ctId, tenCongTrinh) {
+  const now      = new Date();
+  const thang    = fmtThang(now);
+  const noidung  = `Khong co dien bien moi trong thang ${thang}`;
+ 
+  // Kiểm tra đã có xác nhận không có diễn biến trong tháng này chưa
+  const { data: existing } = await sb.from('dien_bien')
+    .select('id')
+    .eq('id_cong_trinh', ctId)
+    .eq('loai_dien_bien', 'khong_co_dien_bien')
+    .eq('thang_xac_nhan', thang);
+ 
+  if (existing && existing.length > 0) {
+    showToast('Công trình này đã được xác nhận không có diễn biến trong tháng ' + thang, 'error');
+    return;
+  }
+ 
+  // Tạo diễn biến đặc biệt
+  const { data: newDB, error } = await sb.from('dien_bien').insert({
+    id_cong_trinh:    ctId,
+    ngay_dien_bien:   now.toISOString().split('T')[0],
+    noi_dung:         noidung,
+    trang_thai_cv:    'Khong co dien bien',
+    loai_dien_bien:   'khong_co_dien_bien',
+    thang_xac_nhan:   thang,
+    da_xac_nhan:      true,
+    ngay_xac_nhan:    now.toISOString(),
+    nguoi_cap_nhat:   currentUser.id,
+    nguoi_xac_nhan:   currentUser.id,
+    ngay_cap_nhat:    now.toISOString(),
+  }).select().single();
+ 
+  if (error) { showToast('Lỗi: '+error.message,'error'); return; }
+  showToast('Đã xác nhận không có diễn biến tháng ' + thang, 'success');
+  await openDetail(currentCTId);
+  await loadCT();
 }
  
 // ══ DIỄN BIẾN ══
@@ -1011,6 +1087,12 @@ function badgeRole(role) {
 function fmtDate(d) {
   if (!d) return '—';
   return new Date(d).toLocaleDateString('vi-VN');
+}
+function fmtThang(d) {
+  const dt = d instanceof Date ? d : new Date(d);
+  const m  = String(dt.getMonth()+1).padStart(2,'0');
+  const y  = dt.getFullYear();
+  return `${m}/${y}`;
 }
 function openModal(id)  { document.getElementById(id).classList.add('open'); }
 function closeModal(id) { document.getElementById(id).classList.remove('open'); }
