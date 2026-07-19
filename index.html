@@ -523,6 +523,63 @@
   </div>
 </div>
  
+<!-- MODAL: Sửa Diễn Biến (chỉ khi chưa xác nhận) -->
+<div class="modal-backdrop" id="modal-sua-db">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">✏️ Sửa diễn biến</div>
+      <button class="btn-close" onclick="closeModal('modal-sua-db')">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="sua-db-id"/>
+      <div style="background:var(--amber-lt);border:1px solid var(--amber);border-radius:8px;padding:10px 14px;font-size:12px;color:var(--amber);margin-bottom:18px;">
+        ⚠️ Chỉ có thể sửa diễn biến <b>chưa xác nhận</b>. Sau khi xác nhận, liên hệ Admin để chỉnh sửa qua Supabase.
+      </div>
+      <div class="mform-row">
+        <div class="mform-group">
+          <label>Ngày diễn biến <span class="req">*</span></label>
+          <input type="date" id="sua-db-ngay"/>
+        </div>
+        <div class="mform-group">
+          <label>Trạng thái công việc</label>
+          <select id="sua-db-trangthai">
+            <option>Đang xử lý</option>
+            <option>Chờ phản hồi</option>
+            <option>Hoàn thành</option>
+            <option>Không ảnh hưởng</option>
+          </select>
+        </div>
+      </div>
+      <div class="mform-group">
+        <label>Nội dung diễn biến <span class="req">*</span></label>
+        <textarea id="sua-db-noidung"></textarea>
+      </div>
+      <div class="mform-row">
+        <div class="mform-group">
+          <label>Số văn bản</label>
+          <input type="text" id="sua-db-sovanban"/>
+        </div>
+        <div class="mform-group">
+          <label>Đơn vị thực hiện</label>
+          <input type="text" id="sua-db-donvi"/>
+        </div>
+      </div>
+      <div class="mform-group">
+        <label>Link văn bản (Google Drive)</label>
+        <input type="url" id="sua-db-link"/>
+      </div>
+      <div class="mform-group">
+        <label>Ghi chú / Vướng mắc</label>
+        <textarea id="sua-db-ghichu" style="min-height:70px"></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeModal('modal-sua-db')">Hủy</button>
+      <button class="btn-save" onclick="luuSuaDB()">💾 Lưu chỉnh sửa</button>
+    </div>
+  </div>
+</div>
+ 
 <!-- MODAL: Xác nhận xóa -->
 <div class="modal-backdrop" id="modal-del">
   <div class="modal" style="max-width:400px">
@@ -545,7 +602,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 const SUPABASE_URL = 'https://ogsmeqzaadbptkfihpll.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_jiemX5EFR6BsTl6Kjne1BQ_wB50syVO';
+const SUPABASE_KEY = 'PASTE_YOUR_PUBLISHABLE_KEY_HERE';
 const FUNCTION_URL = 'https://ogsmeqzaadbptkfihpll.supabase.co/functions/v1/gui-email';
  
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -806,14 +863,17 @@ function renderXacNhanBox(d, ct) {
       </div>`;
   }
  
-  // Chưa xác nhận — hiển thị 2 nút cho Editor/Admin
+  // Chưa xác nhận — hiển thị nút Sửa + Xác nhận cho Editor/Admin
   if (currentRole === 'Viewer') return '';
-  const tenCT = ct.ten_cong_trinh.replace(/'/g,"\\'").replace(/"/g,'&quot;');
+  const tenCT   = ct.ten_cong_trinh.replace(/'/g,"\\'").replace(/"/g,'&quot;');
   const noiDung = d.noi_dung.replace(/'/g,"\\'").replace(/"/g,'&quot;').substring(0,100);
   return `
     <div class="xacnhan-box pending" style="flex-direction:column;align-items:flex-start;gap:8px;">
       <div class="xacnhan-pending-txt">⏳ Chưa xác nhận cập nhật</div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button class="btn-xacnhan" style="background:var(--amber)" onclick="moSuaDB('${d.id}')">
+          ✏️ Sửa
+        </button>
         <button class="btn-xacnhan" onclick="xacNhanCapNhat('${d.id}','${tenCT}','${noiDung}','thuc_te')">
           ✅ Xác nhận đã cập nhật
         </button>
@@ -852,6 +912,49 @@ async function xacNhanCapNhat(dbId, tenCongTrinh, noiDung, loai) {
   } else {
     showToast('Đã xác nhận không có diễn biến tháng này', 'success');
   }
+  await openDetail(currentCTId);
+}
+ 
+// ══ SỬA DIỄN BIẾN (chỉ khi chưa xác nhận) ══
+async function moSuaDB(dbId) {
+  // Lấy dữ liệu diễn biến hiện tại
+  const { data: db, error } = await sb.from('dien_bien')
+    .select('*').eq('id', dbId).single();
+  if (error || !db) { showToast('Không tìm thấy diễn biến', 'error'); return; }
+  if (db.da_xac_nhan) { showToast('Diễn biến đã xác nhận — không thể sửa', 'error'); return; }
+ 
+  // Điền dữ liệu vào form
+  document.getElementById('sua-db-id').value         = db.id;
+  document.getElementById('sua-db-ngay').value        = db.ngay_dien_bien;
+  document.getElementById('sua-db-noidung').value     = db.noi_dung || '';
+  document.getElementById('sua-db-sovanban').value    = db.so_van_ban || '';
+  document.getElementById('sua-db-donvi').value       = db.don_vi_thuc_hien || '';
+  document.getElementById('sua-db-trangthai').value   = db.trang_thai_cv || 'Đang xử lý';
+  document.getElementById('sua-db-link').value        = db.link_van_ban || '';
+  document.getElementById('sua-db-ghichu').value      = db.ghi_chu || '';
+  openModal('modal-sua-db');
+}
+ 
+async function luuSuaDB() {
+  const dbId    = document.getElementById('sua-db-id').value;
+  const noidung = document.getElementById('sua-db-noidung').value.trim();
+  const ngay    = document.getElementById('sua-db-ngay').value;
+  if (!noidung || !ngay) { showToast('Vui lòng nhập ngày và nội dung', 'error'); return; }
+ 
+  const { error } = await sb.from('dien_bien').update({
+    ngay_dien_bien:   ngay,
+    noi_dung:         noidung,
+    so_van_ban:       document.getElementById('sua-db-sovanban').value,
+    don_vi_thuc_hien: document.getElementById('sua-db-donvi').value,
+    trang_thai_cv:    document.getElementById('sua-db-trangthai').value,
+    link_van_ban:     document.getElementById('sua-db-link').value,
+    ghi_chu:          document.getElementById('sua-db-ghichu').value,
+    ngay_cap_nhat:    new Date().toISOString(),
+  }).eq('id', dbId).eq('da_xac_nhan', false); // Bảo vệ: chỉ sửa khi chưa xác nhận
+ 
+  if (error) { showToast('Lỗi lưu chỉnh sửa: ' + error.message, 'error'); return; }
+  showToast('Đã lưu chỉnh sửa thành công', 'success');
+  closeModal('modal-sua-db');
   await openDetail(currentCTId);
 }
  
