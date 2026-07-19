@@ -602,7 +602,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 const SUPABASE_URL = 'https://ogsmeqzaadbptkfihpll.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_jiemX5EFR6BsTl6Kjne1BQ_wB50syVO';
+const SUPABASE_KEY = 'PASTE_YOUR_PUBLISHABLE_KEY_HERE';
 const FUNCTION_URL = 'https://ogsmeqzaadbptkfihpll.supabase.co/functions/v1/gui-email';
  
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -865,19 +865,25 @@ function renderXacNhanBox(d, ct) {
  
   // Chưa xác nhận — hiển thị nút Sửa + Xác nhận cho Editor/Admin
   if (currentRole === 'Viewer') return '';
-  const tenCT   = ct.ten_cong_trinh.replace(/'/g,"\\'").replace(/"/g,'&quot;');
-  const noiDung = d.noi_dung.replace(/'/g,"\\'").replace(/"/g,'&quot;').substring(0,100);
   return `
     <div class="xacnhan-box pending" style="flex-direction:column;align-items:flex-start;gap:8px;">
       <div class="xacnhan-pending-txt">⏳ Chưa xác nhận cập nhật</div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;">
-        <button class="btn-xacnhan" style="background:var(--amber)" onclick="moSuaDB('${d.id}')">
+        <button class="btn-xacnhan" style="background:var(--amber)"
+          onclick="moSuaDB('${d.id}')">
           ✏️ Sửa
         </button>
-        <button class="btn-xacnhan" onclick="xacNhanCapNhat('${d.id}','${tenCT}','${noiDung}','thuc_te')">
+        <button class="btn-xacnhan"
+          data-dbid="${d.id}"
+          data-ctname="${ct.ten_cong_trinh.replace(/"/g,'&quot;')}"
+          data-noidung="${(d.noi_dung||'').substring(0,100).replace(/"/g,'&quot;')}"
+          onclick="xacNhanCapNhatBtn(this)">
           ✅ Xác nhận đã cập nhật
         </button>
-        <button class="btn-xacnhan" style="background:var(--gray-600)" onclick="xacNhanKhongCoDB('${ct.id}','${tenCT}')">
+        <button class="btn-xacnhan" style="background:var(--gray-600)"
+          data-ctid="${ct.id}"
+          data-ctname="${ct.ten_cong_trinh.replace(/"/g,'&quot;')}"
+          onclick="xacNhanKhongCoDBBtn(this)">
           📋 Không có diễn biến tháng này
         </button>
       </div>
@@ -913,6 +919,20 @@ async function xacNhanCapNhat(dbId, tenCongTrinh, noiDung, loai) {
     showToast('Đã xác nhận không có diễn biến tháng này', 'success');
   }
   await openDetail(currentCTId);
+}
+ 
+// ══ HELPER: Đọc data attributes từ nút bấm ══
+function xacNhanCapNhatBtn(btn) {
+  const dbId    = btn.getAttribute('data-dbid');
+  const ctName  = btn.getAttribute('data-ctname');
+  const noiDung = btn.getAttribute('data-noidung');
+  xacNhanCapNhat(dbId, ctName, noiDung, 'thuc_te');
+}
+ 
+function xacNhanKhongCoDBBtn(btn) {
+  const ctId   = btn.getAttribute('data-ctid');
+  const ctName = btn.getAttribute('data-ctname');
+  xacNhanKhongCoDB(ctId, ctName);
 }
  
 // ══ SỬA DIỄN BIẾN (chỉ khi chưa xác nhận) ══
