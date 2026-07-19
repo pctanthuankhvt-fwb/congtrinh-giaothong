@@ -218,7 +218,7 @@
       <div class="icon-wrap">🛣️</div>
       <h1>Theo Dõi Tiến Độ<br>Công Trình Giao Thông</h1>
     </div>
-    <p class="login-sub">Điện lực TP.HCM — Hệ thống nội bộ</p>
+    <p class="login-sub">Công ty Điện lực Tân Thuận — Hệ thống nội bộ</p>
     <div class="form-group">
       <label>Email công ty</label>
       <input type="email" id="inp-email" placeholder="ten@hcmpc.com.vn"/>
@@ -241,7 +241,7 @@
       <span style="font-size:20px">🛣️</span>
       <div>
         <div class="topbar-title">Công Trình Đồng Bộ Giao Thông</div>
-        <div class="topbar-sub">Điện lực TP.HCM — PCTT</div>
+        <div class="topbar-sub">Tổng công ty Điện lực TP.HCM — PCTT</div>
       </div>
     </div>
     <div class="topbar-right">
@@ -1157,7 +1157,7 @@ async function exportReport() {
   .db-people{font-size:11px;color:#666;margin-top:6px;padding-top:6px;border-top:1px solid #eee}
   </style></head><body>
   <h1>Báo cáo tiến độ công trình đồng bộ giao thông</h1>
-  <div class="sub">Điện lực TP.HCM — PCTT | Ngày xuất: ${now}</div>
+  <div class="sub">Tổng công ty Điện lực TP.HCM — PCTT | Ngày xuất: ${now}</div>
   <table><thead><tr><th>#</th><th>Tên công trình</th><th>Loại</th><th>Chủ đầu tư</th><th>Trạng thái</th></tr></thead><tbody>
   ${(cts||[]).map((c,i)=>`<tr><td>${i+1}</td><td><b>${c.ten_cong_trinh}</b></td><td>${c.loai_cong_trinh||'—'}</td><td>${c.chu_dau_tu||'—'}</td><td>${c.trang_thai_tong}</td></tr>`).join('')}
   </tbody></table>
