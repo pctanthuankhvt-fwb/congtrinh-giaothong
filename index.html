@@ -271,13 +271,17 @@
  
     <!-- TAB: Danh sách -->
     <div id="tab-list">
-      <div class="stats-row">
+      <!-- Dòng 1: Tổng / GĐ1 / GĐ3 / Tạm dừng -->
+      <div class="stats-row" style="margin-bottom:10px">
         <div class="stat-card"><div class="stat-icon navy">🏗️</div><div><div class="stat-num" id="stat-total">0</div><div class="stat-lbl">Tổng công trình</div></div></div>
         <div class="stat-card"><div class="stat-icon blue">🔍</div><div><div class="stat-num" id="stat-gd1">0</div><div class="stat-lbl">GĐ 1: Khảo sát</div></div></div>
-        <div class="stat-card"><div class="stat-icon amber">🤝</div><div><div class="stat-num" id="stat-gd2">0</div><div class="stat-lbl">GĐ 2: Thống nhất</div></div></div>
         <div class="stat-card"><div class="stat-icon teal">⚙️</div><div><div class="stat-num" id="stat-gd3">0</div><div class="stat-lbl">GĐ 3: Triển khai</div></div></div>
-        <div class="stat-card"><div class="stat-icon purple">✅</div><div><div class="stat-num" id="stat-hoantat">0</div><div class="stat-lbl">Hoàn tất</div></div></div>
         <div class="stat-card"><div class="stat-icon" style="background:var(--red-lt);color:var(--red)">⏸️</div><div><div class="stat-num" id="stat-tamdung">0</div><div class="stat-lbl">Tạm dừng</div></div></div>
+      </div>
+      <!-- Dòng 2: GĐ2 / Hoàn tất -->
+      <div class="stats-row" style="grid-template-columns:repeat(auto-fit,minmax(160px,1fr));margin-bottom:10px">
+        <div class="stat-card" style="grid-column:2/3"><div class="stat-icon amber">🤝</div><div><div class="stat-num" id="stat-gd2">0</div><div class="stat-lbl">GĐ 2: Thống nhất</div></div></div>
+        <div class="stat-card" style="grid-column:3/4"><div class="stat-icon purple">✅</div><div><div class="stat-num" id="stat-hoantat">0</div><div class="stat-lbl">GĐ 4: Hoàn tất</div></div></div>
       </div>
       <!-- Dòng ghi chú giai đoạn -->
       <div class="stat-note-row">
@@ -294,7 +298,12 @@
         <div class="stat-note-item">
           <span class="dot" style="background:#0e9e8a"></span>
           GĐ 3: Triển khai
-          <span class="tooltip">GĐ 3: Triển khai thực hiện sau khi thống nhất phương án</span>
+          <span class="tooltip">GĐ 3: Triển khai thực hiện sau khi thống nhất phương án bồi thường, tái lập</span>
+        </div>
+        <div class="stat-note-item">
+          <span class="dot" style="background:#7c3aed"></span>
+          GĐ 4: Hoàn tất
+          <span class="tooltip">GĐ 4: Hoàn tất công trình</span>
         </div>
         <div class="stat-note-item">
           <span class="dot" style="background:#c0392b"></span>
@@ -309,10 +318,10 @@
         </div>
         <select class="filter-select" id="filter-status" onchange="renderTable()">
           <option value="">Tất cả giai đoạn</option>
-          <option>GĐ 1: Khảo sát &amp; khái toán</option>
-          <option>GĐ 2: Đang thống nhất phương án</option>
-          <option>GĐ 3: Triển khai</option>
-          <option>Hoàn tất</option>
+          <option>GĐ 1: Khảo sát ảnh hưởng lưới điện, cung cấp khái toán</option>
+          <option>GĐ 2: Phối hợp, thống nhất phương án bồi thường, tái lập</option>
+          <option>GĐ 3: Triển khai thực hiện sau khi thống nhất phương án bồi thường, tái lập</option>
+          <option>GĐ 4: Hoàn tất</option>
           <option>Tạm dừng</option>
           <option>Không ảnh hưởng</option>
         </select>
@@ -432,10 +441,10 @@
         <div class="mform-group">
           <label>Giai đoạn thực hiện</label>
           <select id="ct-trangthai">
-            <option>GĐ 1: Khảo sát &amp; khái toán</option>
-            <option>GĐ 2: Đang thống nhất phương án</option>
-            <option>GĐ 3: Triển khai</option>
-            <option>Hoàn tất</option>
+            <option>GĐ 1: Khảo sát ảnh hưởng lưới điện, cung cấp khái toán</option>
+            <option>GĐ 2: Phối hợp, thống nhất phương án bồi thường, tái lập</option>
+            <option>GĐ 3: Triển khai thực hiện sau khi thống nhất phương án bồi thường, tái lập</option>
+            <option>GĐ 4: Hoàn tất</option>
             <option>Tạm dừng</option>
             <option>Không ảnh hưởng</option>
           </select>
@@ -569,7 +578,7 @@
     <div class="modal-body">
       <input type="hidden" id="sua-db-id"/>
       <div style="background:var(--amber-lt);border:1px solid var(--amber);border-radius:8px;padding:10px 14px;font-size:12px;color:var(--amber);margin-bottom:18px;">
-        ⚠️ Chỉ có thể sửa diễn biến <b>chưa xác nhận</b>. Sau khi xác nhận, liên hệ Admin để chỉnh sửa.
+        ⚠️ Chỉ có thể sửa diễn biến <b>chưa xác nhận</b>. Sau khi xác nhận, liên hệ Admin để chỉnh sửa qua Supabase.
       </div>
       <div class="mform-row">
         <div class="mform-group">
@@ -638,7 +647,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 const SUPABASE_URL = 'https://ogsmeqzaadbptkfihpll.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_jiemX5EFR6BsTl6Kjne1BQ_wB50syVO';
+const SUPABASE_KEY = 'PASTE_YOUR_PUBLISHABLE_KEY_HERE';
 const FUNCTION_URL = 'https://ogsmeqzaadbptkfihpll.supabase.co/functions/v1/gui-email';
  
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -737,10 +746,10 @@ async function loadCT() {
  
 function updateStats() {
   document.getElementById('stat-total').textContent   = allCT.length;
-  document.getElementById('stat-gd1').textContent     = allCT.filter(c=>c.trang_thai_tong==='GĐ 1: Khảo sát & khái toán').length;
-  document.getElementById('stat-gd2').textContent     = allCT.filter(c=>c.trang_thai_tong==='GĐ 2: Đang thống nhất phương án').length;
-  document.getElementById('stat-gd3').textContent     = allCT.filter(c=>c.trang_thai_tong==='GĐ 3: Triển khai').length;
-  document.getElementById('stat-hoantat').textContent = allCT.filter(c=>c.trang_thai_tong==='Hoàn tất').length;
+  document.getElementById('stat-gd1').textContent     = allCT.filter(c=>c.trang_thai_tong==='GĐ 1: Khảo sát ảnh hưởng lưới điện, cung cấp khái toán').length;
+  document.getElementById('stat-gd2').textContent     = allCT.filter(c=>c.trang_thai_tong==='GĐ 2: Phối hợp, thống nhất phương án bồi thường, tái lập').length;
+  document.getElementById('stat-gd3').textContent     = allCT.filter(c=>c.trang_thai_tong==='GĐ 3: Triển khai thực hiện sau khi thống nhất phương án bồi thường, tái lập').length;
+  document.getElementById('stat-hoantat').textContent = allCT.filter(c=>c.trang_thai_tong==='GĐ 4: Hoàn tất').length;
   document.getElementById('stat-tamdung').textContent = allCT.filter(c=>c.trang_thai_tong==='Tạm dừng').length;
 }
  
@@ -1239,18 +1248,27 @@ async function exportCSV() {
 // ══ HELPERS ══
 function badgeHTML(status) {
   const map={
-    'GĐ 1: Khảo sát & khái toán':       'navy',
-    'GĐ 2: Đang thống nhất phương án':   'vang',
-    'GĐ 3: Triển khai':                  'xanh',
-    'Hoàn tất':                          'purple',
-    'Tạm dừng':                          'do',
-    'Không ảnh hưởng':                   'xam',
-    'Đang xử lý':                        'navy',
-    'Chờ phản hồi':                      'vang',
-    'Hoàn thành':                        'xanh',
-    'Không có diễn biến':                'xam',
+    'GĐ 1: Khảo sát ảnh hưởng lưới điện, cung cấp khái toán':                              'navy',
+    'GĐ 2: Phối hợp, thống nhất phương án bồi thường, tái lập':                            'vang',
+    'GĐ 3: Triển khai thực hiện sau khi thống nhất phương án bồi thường, tái lập':         'xanh',
+    'GĐ 4: Hoàn tất':                   'purple',
+    'Tạm dừng':                         'do',
+    'Không ảnh hưởng':                  'xam',
+    'Đang xử lý':                       'navy',
+    'Chờ phản hồi':                     'vang',
+    'Hoàn thành':                       'xanh',
+    'Không có diễn biến':               'xam',
   };
-  return `<span class="badge ${map[status]||'xam'}" style="${status==='Hoàn tất'?'background:#f0e8fb;color:#7c3aed':''}">${status||'—'}</span>`;
+  const isHoanTat = status === 'GĐ 4: Hoàn tất';
+  // Rút gọn tên giai đoạn dài để hiển thị badge gọn
+  const shortName = {
+    'GĐ 1: Khảo sát ảnh hưởng lưới điện, cung cấp khái toán':                              'GĐ 1: Khảo sát',
+    'GĐ 2: Phối hợp, thống nhất phương án bồi thường, tái lập':                            'GĐ 2: Thống nhất',
+    'GĐ 3: Triển khai thực hiện sau khi thống nhất phương án bồi thường, tái lập':         'GĐ 3: Triển khai',
+    'GĐ 4: Hoàn tất':                   'GĐ 4: Hoàn tất',
+  };
+  const display = shortName[status] || status || '—';
+  return `<span class="badge ${map[status]||'xam'}" title="${status||''}" style="${isHoanTat?'background:#f0e8fb;color:#7c3aed':''}">${display}</span>`;
 }
 function badgeRole(role) {
   const map={'Admin':'navy','Editor':'vang','Viewer':'xam'};
