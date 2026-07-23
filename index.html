@@ -271,17 +271,16 @@
  
     <!-- TAB: Danh sách -->
     <div id="tab-list">
-      <!-- Dòng 1: Tổng / GĐ1 / GĐ3 / Tạm dừng -->
-      <div class="stats-row" style="margin-bottom:10px">
+      <!-- Stats: 2 dòng x 3 ô đều nhau -->
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:10px;">
+        <!-- Dòng 1: Tổng / GĐ1 / GĐ3 -->
         <div class="stat-card"><div class="stat-icon navy">🏗️</div><div><div class="stat-num" id="stat-total">0</div><div class="stat-lbl">Tổng công trình</div></div></div>
         <div class="stat-card"><div class="stat-icon blue">🔍</div><div><div class="stat-num" id="stat-gd1">0</div><div class="stat-lbl">GĐ 1: Khảo sát</div></div></div>
         <div class="stat-card"><div class="stat-icon teal">⚙️</div><div><div class="stat-num" id="stat-gd3">0</div><div class="stat-lbl">GĐ 3: Triển khai</div></div></div>
+        <!-- Dòng 2: Tạm dừng / GĐ2 / GĐ4 -->
         <div class="stat-card"><div class="stat-icon" style="background:var(--red-lt);color:var(--red)">⏸️</div><div><div class="stat-num" id="stat-tamdung">0</div><div class="stat-lbl">Tạm dừng</div></div></div>
-      </div>
-      <!-- Dòng 2: GĐ2 / Hoàn tất -->
-      <div class="stats-row" style="grid-template-columns:repeat(auto-fit,minmax(160px,1fr));margin-bottom:10px">
-        <div class="stat-card" style="grid-column:2/3"><div class="stat-icon amber">🤝</div><div><div class="stat-num" id="stat-gd2">0</div><div class="stat-lbl">GĐ 2: Thống nhất</div></div></div>
-        <div class="stat-card" style="grid-column:3/4"><div class="stat-icon purple">✅</div><div><div class="stat-num" id="stat-hoantat">0</div><div class="stat-lbl">GĐ 4: Hoàn tất</div></div></div>
+        <div class="stat-card"><div class="stat-icon amber">🤝</div><div><div class="stat-num" id="stat-gd2">0</div><div class="stat-lbl">GĐ 2: Thống nhất</div></div></div>
+        <div class="stat-card"><div class="stat-icon purple">✅</div><div><div class="stat-num" id="stat-hoantat">0</div><div class="stat-lbl">GĐ 4: Hoàn tất</div></div></div>
       </div>
       <!-- Dòng ghi chú giai đoạn -->
       <div class="stat-note-row">
@@ -578,7 +577,7 @@
     <div class="modal-body">
       <input type="hidden" id="sua-db-id"/>
       <div style="background:var(--amber-lt);border:1px solid var(--amber);border-radius:8px;padding:10px 14px;font-size:12px;color:var(--amber);margin-bottom:18px;">
-        ⚠️ Chỉ có thể sửa diễn biến <b>chưa xác nhận</b>. Sau khi xác nhận, liên hệ Admin để chỉnh sửa.
+        ⚠️ Chỉ có thể sửa diễn biến <b>chưa xác nhận</b>. Sau khi xác nhận, liên hệ Admin để chỉnh sửa qua Supabase.
       </div>
       <div class="mform-row">
         <div class="mform-group">
@@ -647,7 +646,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 const SUPABASE_URL = 'https://ogsmeqzaadbptkfihpll.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_jiemX5EFR6BsTl6Kjne1BQ_wB50syVO';
+const SUPABASE_KEY = 'PASTE_YOUR_PUBLISHABLE_KEY_HERE';
 const FUNCTION_URL = 'https://ogsmeqzaadbptkfihpll.supabase.co/functions/v1/gui-email';
  
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
