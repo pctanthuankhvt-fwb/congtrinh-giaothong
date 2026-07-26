@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Theo Dõi Tiến Độ Công Trình Đồng bộ Giao Thông</title>
+<title>Theo Dõi Tiến Độ Công Trình Giao Thông</title>
 <style>
   :root {
     --navy:#1a2744;--navy-mid:#243461;--blue:#2f6fd4;--blue-lt:#e8f0fb;
@@ -223,9 +223,9 @@
   <div class="login-card">
     <div class="login-logo">
       <div class="icon-wrap">🛣️</div>
-      <h1>Theo Dõi Tiến Độ<br>Công Trình Đồng Bộ Giao Thông</h1>
+      <h1>Theo Dõi Tiến Độ<br>Công Trình Giao Thông</h1>
     </div>
-    <p class="login-sub">PC Tân Thuận — Hệ thống nội bộ</p>
+    <p class="login-sub">Điện lực TP.HCM — Hệ thống nội bộ</p>
     <div class="form-group">
       <label>Email công ty</label>
       <input type="email" id="inp-email" placeholder="ten@hcmpc.com.vn"/>
@@ -248,7 +248,7 @@
       <span style="font-size:20px">🛣️</span>
       <div>
         <div class="topbar-title">Công Trình Đồng Bộ Giao Thông</div>
-        <div class="topbar-sub">EVNHCMC — PC Tân Thuận</div>
+        <div class="topbar-sub">Điện lực TP.HCM — PCTT</div>
       </div>
     </div>
     <div class="topbar-right">
@@ -279,7 +279,7 @@
         <div class="stat-card"><div class="stat-icon teal">⚙️</div><div><div class="stat-num" id="stat-gd3">0</div><div class="stat-lbl">GĐ 3: Triển khai</div></div></div>
         <!-- Dòng 2: Tạm dừng / GĐ2 / GĐ4 -->
         <div class="stat-card"><div class="stat-icon" style="background:var(--red-lt);color:var(--red)">⏸️</div><div><div class="stat-num" id="stat-tamdung">0</div><div class="stat-lbl">Tạm dừng</div></div></div>
-        <div class="stat-card"><div class="stat-icon amber">🤝</div><div><div class="stat-num" id="stat-gd2">0</div><div class="stat-lbl">GĐ 2: Thống nhất PA</div></div></div>
+        <div class="stat-card"><div class="stat-icon amber">🤝</div><div><div class="stat-num" id="stat-gd2">0</div><div class="stat-lbl">GĐ 2: Thống nhất</div></div></div>
         <div class="stat-card"><div class="stat-icon purple">✅</div><div><div class="stat-num" id="stat-hoantat">0</div><div class="stat-lbl">GĐ 4: Hoàn tất</div></div></div>
       </div>
       <!-- Dòng ghi chú giai đoạn -->
@@ -331,7 +331,7 @@
           <thead>
             <tr>
               <th>#</th><th>Tên công trình</th><th>Chủ đầu tư</th>
-              <th>Giai đoạn</th><th>Ngày cập nhật</th><th>Thao tác</th>
+              <th>Giai đoạn</th><th>Cập nhật</th><th>Thao tác</th>
             </tr>
           </thead>
           <tbody id="ct-tbody">
@@ -577,7 +577,7 @@
     <div class="modal-body">
       <input type="hidden" id="sua-db-id"/>
       <div style="background:var(--amber-lt);border:1px solid var(--amber);border-radius:8px;padding:10px 14px;font-size:12px;color:var(--amber);margin-bottom:18px;">
-        ⚠️ Chỉ có thể sửa diễn biến <b>chưa xác nhận</b>. Sau khi xác nhận, liên hệ Admin để chỉnh sửa.
+        ⚠️ Chỉ có thể sửa diễn biến <b>chưa xác nhận</b>. Sau khi xác nhận, liên hệ Admin để chỉnh sửa qua Supabase.
       </div>
       <div class="mform-row">
         <div class="mform-group">
@@ -646,7 +646,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 const SUPABASE_URL = 'https://ogsmeqzaadbptkfihpll.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_jiemX5EFR6BsTl6Kjne1BQ_wB50syVO';
+const SUPABASE_KEY = 'PASTE_YOUR_PUBLISHABLE_KEY_HERE';
 const FUNCTION_URL = 'https://ogsmeqzaadbptkfihpll.supabase.co/functions/v1/gui-email';
  
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -1188,25 +1188,84 @@ async function exportReport() {
   const { data: cts } = await sb.from('cong_trinh').select('*').order('ngay_tao');
   const { data: dbs } = await sb.from('dien_bien').select('*').order('ngay_dien_bien',{ascending:false});
   const now = new Date().toLocaleDateString('vi-VN');
+ 
+  // Lấy diễn biến mới nhất (thực tế, không phải loại "không có diễn biến") cho từng CT
+  function getDienBienMoiNhat(ctId) {
+    if (!dbs) return null;
+    return (dbs).find(d =>
+      d.id_cong_trinh === ctId &&
+      d.loai_dien_bien !== 'khong_co_dien_bien'
+    ) || null;
+  }
+ 
   let html = `<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
   <title>Báo cáo tiến độ</title>
-  <style>body{font-family:Arial,sans-serif;font-size:13px;max-width:900px;margin:40px auto;padding:20px}
+  <style>
+  body{font-family:Arial,sans-serif;font-size:13px;max-width:1100px;margin:40px auto;padding:20px}
   h1{text-align:center;font-size:18px;text-transform:uppercase;margin-bottom:4px}
   .sub{text-align:center;font-size:12px;color:#666;margin-bottom:32px}
   table{width:100%;border-collapse:collapse;margin-bottom:32px}
   th{background:#1a2744;color:#fff;padding:10px 12px;text-align:left;font-size:12px}
-  td{padding:10px 12px;border-bottom:1px solid #eee;vertical-align:top}
+  td{padding:10px 12px;border-bottom:1px solid #eee;vertical-align:top;font-size:12px}
+  tr:nth-child(even) td{background:#f7f8fa}
+  .db-moi{font-size:12px;color:#2d3345;line-height:1.5}
+  .db-moi-date{font-size:11px;color:#2f6fd4;font-weight:700;margin-bottom:3px}
+  .db-moi-vb{font-size:11px;color:#888;margin-top:3px}
+  .db-moi-xn{font-size:10px;color:#27ae60;margin-top:2px}
+  .db-moi-chua{font-size:10px;color:#999;margin-top:2px}
+  .chua-co{font-size:11px;color:#aaa;font-style:italic}
   .ct-title{font-weight:700;margin:20px 0 4px;font-size:14px;border-left:4px solid #2f6fd4;padding-left:10px}
   .db-item{margin:8px 0;padding:10px 14px;background:#f7f8fa;border-radius:4px;font-size:12px}
   .db-item.confirmed{border-left:3px solid #27ae60;background:#eafaf1}
   .db-date{font-weight:700;color:#1a2744;margin-bottom:4px}
   .db-people{font-size:11px;color:#666;margin-top:6px;padding-top:6px;border-top:1px solid #eee}
+  .gd-badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600;background:#e8f0fb;color:#2f6fd4;}
   </style></head><body>
   <h1>Báo cáo tiến độ công trình đồng bộ giao thông</h1>
   <div class="sub">Điện lực TP.HCM — PCTT | Ngày xuất: ${now}</div>
-  <table><thead><tr><th>#</th><th>Tên công trình</th><th>Loại</th><th>Chủ đầu tư</th><th>Trạng thái</th></tr></thead><tbody>
-  ${(cts||[]).map((c,i)=>`<tr><td>${i+1}</td><td><b>${c.ten_cong_trinh}</b></td><td>${c.loai_cong_trinh||'—'}</td><td>${c.chu_dau_tu||'—'}</td><td>${c.trang_thai_tong}</td></tr>`).join('')}
-  </tbody></table>
+  <table>
+    <thead>
+      <tr>
+        <th style="width:30px">#</th>
+        <th style="width:220px">Tên công trình</th>
+        <th style="width:100px">Loại</th>
+        <th style="width:150px">Chủ đầu tư</th>
+        <th style="width:160px">Giai đoạn</th>
+        <th>Diễn biến mới nhất</th>
+      </tr>
+    </thead>
+    <tbody>
+    ${(cts||[]).map((c,i) => {
+      const db = getDienBienMoiNhat(c.id);
+      const dbHTML = db
+        ? `<div class="db-moi">
+             <div class="db-moi-date">📅 ${new Date(db.ngay_dien_bien).toLocaleDateString('vi-VN')}</div>
+             <div>${db.noi_dung}</div>
+             ${db.so_van_ban ? `<div class="db-moi-vb">📄 ${db.so_van_ban}${db.don_vi_thuc_hien ? ' — ' + db.don_vi_thuc_hien : ''}</div>` : ''}
+             ${db.da_xac_nhan
+               ? `<div class="db-moi-xn">✅ Đã xác nhận — ${new Date(db.ngay_xac_nhan).toLocaleDateString('vi-VN')}</div>`
+               : `<div class="db-moi-chua">⏳ Chưa xác nhận</div>`}
+           </div>`
+        : `<span class="chua-co">Chưa có diễn biến</span>`;
+      // Rút gọn tên giai đoạn cho gọn trong bảng
+      const shortGD = {
+        'GĐ 1: Khảo sát ảnh hưởng lưới điện, cung cấp khái toán': 'GĐ 1: Khảo sát',
+        'GĐ 2: Phối hợp, thống nhất phương án bồi thường, tái lập': 'GĐ 2: Thống nhất',
+        'GĐ 3: Triển khai thực hiện sau khi thống nhất phương án bồi thường, tái lập': 'GĐ 3: Triển khai',
+        'GĐ 4: Hoàn tất': 'GĐ 4: Hoàn tất',
+      };
+      const gdDisplay = shortGD[c.trang_thai_tong] || c.trang_thai_tong;
+      return `<tr>
+        <td style="text-align:center;color:#999">${i+1}</td>
+        <td><b>${c.ten_cong_trinh}</b></td>
+        <td>${c.loai_cong_trinh||'—'}</td>
+        <td>${c.chu_dau_tu||'—'}</td>
+        <td><span class="gd-badge">${gdDisplay}</span></td>
+        <td>${dbHTML}</td>
+      </tr>`;
+    }).join('')}
+    </tbody>
+  </table>
   <h2 style="font-size:15px;border-bottom:2px solid #1a2744;padding-bottom:8px;margin-bottom:20px">Chi tiết diễn biến</h2>
   ${(cts||[]).map(c=>{
     const dList=(dbs||[]).filter(d=>d.id_cong_trinh===c.id);
