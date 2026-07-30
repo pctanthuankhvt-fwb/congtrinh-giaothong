@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Theo Dõi Tiến Độ Công Trình Đồng bộ Giao Thông</title>
+<title>Theo Dõi Tiến Độ Công Trình Giao Thông</title>
 <style>
   :root {
     --navy:#1a2744;--navy-mid:#243461;--blue:#2f6fd4;--blue-lt:#e8f0fb;
@@ -223,9 +223,9 @@
   <div class="login-card">
     <div class="login-logo">
       <div class="icon-wrap">🛣️</div>
-      <h1>Theo Dõi Tiến Độ<br>Công Trình Đồng Bộ Giao Thông</h1>
+      <h1>Theo Dõi Tiến Độ<br>Công Trình Giao Thông</h1>
     </div>
-    <p class="login-sub">Công ty Điện lực Tân Thuận — Hệ thống nội bộ</p>
+    <p class="login-sub">Điện lực TP.HCM — Hệ thống nội bộ</p>
     <div class="form-group">
       <label>Email công ty</label>
       <input type="email" id="inp-email" placeholder="ten@hcmpc.com.vn"/>
@@ -248,7 +248,7 @@
       <span style="font-size:20px">🛣️</span>
       <div>
         <div class="topbar-title">Công Trình Đồng Bộ Giao Thông</div>
-        <div class="topbar-sub">Tổng công ty Điện lực TP.HCM — PCTT</div>
+        <div class="topbar-sub">Điện lực TP.HCM — PCTT</div>
       </div>
     </div>
     <div class="topbar-right">
@@ -275,11 +275,11 @@
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:10px;">
         <!-- Dòng 1: Tổng / GĐ1 / GĐ3 -->
         <div class="stat-card"><div class="stat-icon navy">🏗️</div><div><div class="stat-num" id="stat-total">0</div><div class="stat-lbl">Tổng công trình</div></div></div>
-        <div class="stat-card"><div class="stat-icon blue">🔍</div><div><div class="stat-num" id="stat-gd1">0</div><div class="stat-lbl">GĐ 1: Khảo sát PA</div></div></div>
+        <div class="stat-card"><div class="stat-icon blue">🔍</div><div><div class="stat-num" id="stat-gd1">0</div><div class="stat-lbl">GĐ 1: Khảo sát</div></div></div>
         <div class="stat-card"><div class="stat-icon teal">⚙️</div><div><div class="stat-num" id="stat-gd3">0</div><div class="stat-lbl">GĐ 3: Triển khai</div></div></div>
         <!-- Dòng 2: Tạm dừng / GĐ2 / GĐ4 -->
         <div class="stat-card"><div class="stat-icon" style="background:var(--red-lt);color:var(--red)">⏸️</div><div><div class="stat-num" id="stat-tamdung">0</div><div class="stat-lbl">Tạm dừng</div></div></div>
-        <div class="stat-card"><div class="stat-icon amber">🤝</div><div><div class="stat-num" id="stat-gd2">0</div><div class="stat-lbl">GĐ 2: Thống nhất PA</div></div></div>
+        <div class="stat-card"><div class="stat-icon amber">🤝</div><div><div class="stat-num" id="stat-gd2">0</div><div class="stat-lbl">GĐ 2: Thống nhất</div></div></div>
         <div class="stat-card"><div class="stat-icon purple">✅</div><div><div class="stat-num" id="stat-hoantat">0</div><div class="stat-lbl">GĐ 4: Hoàn tất</div></div></div>
       </div>
       <!-- Dòng ghi chú giai đoạn -->
@@ -331,7 +331,7 @@
           <thead>
             <tr>
               <th>#</th><th>Tên công trình</th><th>Chủ đầu tư</th>
-              <th>Giai đoạn</th><th>Ngày Cập nhật</th><th>Thao tác</th>
+              <th>Giai đoạn</th><th>Cập nhật</th><th>Thao tác</th>
             </tr>
           </thead>
           <tbody id="ct-tbody">
@@ -352,7 +352,7 @@
       <div class="report-card">
         <h3>📊 Xuất dữ liệu CSV</h3>
         <p>Xuất toàn bộ dữ liệu công trình dưới dạng CSV để nhập vào Excel.</p>
-        <button class="btn-export" onclick="exportCSV()">⬇️ Xuất file CSV</button>
+        <button class="btn-export" onclick="exportExcel()">⬇️ Xuất file Excel (.xlsx)</button>
       </div>
     </div>
  
@@ -577,7 +577,7 @@
     <div class="modal-body">
       <input type="hidden" id="sua-db-id"/>
       <div style="background:var(--amber-lt);border:1px solid var(--amber);border-radius:8px;padding:10px 14px;font-size:12px;color:var(--amber);margin-bottom:18px;">
-        ⚠️ Chỉ có thể sửa diễn biến <b>chưa xác nhận</b>. Sau khi xác nhận, liên hệ Admin để chỉnh sửa.
+        ⚠️ Chỉ có thể sửa diễn biến <b>chưa xác nhận</b>. Sau khi xác nhận, liên hệ Admin để chỉnh sửa qua Supabase.
       </div>
       <div class="mform-row">
         <div class="mform-group">
@@ -644,9 +644,10 @@
 <div class="toast" id="toast"><span id="toast-msg"></span></div>
  
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script>
 const SUPABASE_URL = 'https://ogsmeqzaadbptkfihpll.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_jiemX5EFR6BsTl6Kjne1BQ_wB50syVO';
+const SUPABASE_KEY = 'PASTE_YOUR_PUBLISHABLE_KEY_HERE';
 const FUNCTION_URL = 'https://ogsmeqzaadbptkfihpll.supabase.co/functions/v1/gui-email';
  
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -1290,17 +1291,129 @@ async function exportReport() {
   showToast('Đã xuất báo cáo thành công','success');
 }
  
-async function exportCSV() {
-  const { data } = await sb.from('cong_trinh').select('*').order('ngay_tao');
-  const rows = [['STT','Tên công trình','Loại','Chủ đầu tư','Trạng thái','Ngày tạo','Ghi chú']];
-  (data||[]).forEach((c,i)=>rows.push([i+1,c.ten_cong_trinh,c.loai_cong_trinh||'',c.chu_dau_tu||'',c.trang_thai_tong,fmtDate(c.ngay_tao),c.ghi_chu||'']));
-  const csv = rows.map(r=>r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
-  const blob = new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'});
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'DanhSach_CongTrinh.csv';
-  a.click();
-  showToast('Đã xuất file CSV','success');
+async function exportExcel() {
+  showToast('Đang tạo file Excel...', '');
+ 
+  // Lấy dữ liệu
+  const { data: cts } = await sb.from('cong_trinh').select('*').order('ngay_tao');
+  const { data: dbs } = await sb.from('dien_bien').select('*').order('ngay_dien_bien', { ascending: false });
+ 
+  // Helper: lấy diễn biến mới nhất (thực tế) của 1 công trình
+  function dbMoiNhat(ctId) {
+    return (dbs||[]).find(d =>
+      d.id_cong_trinh === ctId &&
+      d.loai_dien_bien !== 'khong_co_dien_bien'
+    ) || null;
+  }
+ 
+  // ── SHEET 1: Danh sách công trình + diễn biến mới nhất ──
+  const hdSheet1 = [
+    'STT', 'Tên công trình', 'Loại công trình', 'Chủ đầu tư',
+    'Giai đoạn thực hiện', 'Ngày tạo', 'Ghi chú',
+    'Ngày diễn biến MN', 'Nội dung diễn biến mới nhất',
+    'Số văn bản', 'Đơn vị thực hiện', 'Trạng thái CV', 'Đã xác nhận'
+  ];
+  const rowsSheet1 = (cts||[]).map((c, i) => {
+    const db = dbMoiNhat(c.id);
+    return [
+      i + 1,
+      c.ten_cong_trinh,
+      c.loai_cong_trinh || '',
+      c.chu_dau_tu || '',
+      c.trang_thai_tong || '',
+      fmtDate(c.ngay_tao),
+      c.ghi_chu || '',
+      db ? fmtDate(db.ngay_dien_bien) : '',
+      db ? db.noi_dung : '',
+      db ? (db.so_van_ban || '') : '',
+      db ? (db.don_vi_thuc_hien || '') : '',
+      db ? (db.trang_thai_cv || '') : '',
+      db ? (db.da_xac_nhan ? 'Đã xác nhận' : 'Chưa xác nhận') : '',
+    ];
+  });
+ 
+  // ── SHEET 2: Chi tiết tất cả diễn biến ──
+  const hdSheet2 = [
+    'STT', 'Tên công trình', 'Giai đoạn',
+    'Ngày diễn biến', 'Nội dung diễn biến',
+    'Số văn bản', 'Đơn vị thực hiện', 'Trạng thái CV',
+    'Loại diễn biến', 'Đã xác nhận', 'Ngày xác nhận',
+    'Người cập nhật', 'Người xác nhận', 'Ghi chú'
+  ];
+ 
+  // Map công trình theo id
+  const ctMap = {};
+  (cts||[]).forEach(c => { ctMap[c.id] = c; });
+ 
+  // Sắp xếp: theo công trình (thứ tự ngay_tao), rồi theo ngày diễn biến mới nhất trước
+  const dbSorted = [...(dbs||[])].sort((a, b) => {
+    const ctA = cts ? cts.findIndex(c => c.id === a.id_cong_trinh) : 0;
+    const ctB = cts ? cts.findIndex(c => c.id === b.id_cong_trinh) : 0;
+    if (ctA !== ctB) return ctA - ctB;
+    return new Date(b.ngay_dien_bien) - new Date(a.ngay_dien_bien);
+  });
+ 
+  let stt2 = 1;
+  const rowsSheet2 = dbSorted.map(d => {
+    const ct = ctMap[d.id_cong_trinh] || {};
+    const laDacBiet = d.loai_dien_bien === 'khong_co_dien_bien';
+    return [
+      stt2++,
+      ct.ten_cong_trinh || '',
+      ct.trang_thai_tong || '',
+      fmtDate(d.ngay_dien_bien),
+      d.noi_dung || '',
+      d.so_van_ban || '',
+      d.don_vi_thuc_hien || '',
+      d.trang_thai_cv || '',
+      laDacBiet ? 'Không có diễn biến' : 'Thực tế',
+      d.da_xac_nhan ? 'Đã xác nhận' : 'Chưa xác nhận',
+      d.ngay_xac_nhan ? fmtDate(d.ngay_xac_nhan) : '',
+      d.nguoi_cap_nhat  ? (allUsers[d.nguoi_cap_nhat]  || d.nguoi_cap_nhat)  : '',
+      d.nguoi_xac_nhan  ? (allUsers[d.nguoi_xac_nhan]  || d.nguoi_xac_nhan)  : '',
+      d.ghi_chu || '',
+    ];
+  });
+ 
+  // ── TẠO WORKBOOK ──
+  const wb = XLSX.utils.book_new();
+ 
+  // Sheet 1
+  const ws1 = XLSX.utils.aoa_to_sheet([hdSheet1, ...rowsSheet1]);
+  // Định dạng header Sheet 1
+  const rangeS1 = XLSX.utils.decode_range(ws1['!ref']);
+  for (let C = rangeS1.s.c; C <= rangeS1.e.c; C++) {
+    const cell = ws1[XLSX.utils.encode_cell({r:0, c:C})];
+    if (cell) cell.s = { font:{bold:true, color:{rgb:'FFFFFF'}}, fill:{fgColor:{rgb:'1A2744'}}, alignment:{horizontal:'center',wrapText:true} };
+  }
+  // Độ rộng cột Sheet 1
+  ws1['!cols'] = [
+    {wch:5},{wch:35},{wch:15},{wch:25},{wch:30},
+    {wch:12},{wch:20},{wch:14},{wch:50},{wch:18},{wch:18},{wch:15},{wch:15}
+  ];
+  ws1['!freeze'] = {xSplit:0, ySplit:1}; // Freeze hàng tiêu đề
+  XLSX.utils.book_append_sheet(wb, ws1, 'Danh sach cong trinh');
+ 
+  // Sheet 2
+  const ws2 = XLSX.utils.aoa_to_sheet([hdSheet2, ...rowsSheet2]);
+  // Định dạng header Sheet 2
+  const rangeS2 = XLSX.utils.decode_range(ws2['!ref']);
+  for (let C = rangeS2.s.c; C <= rangeS2.e.c; C++) {
+    const cell = ws2[XLSX.utils.encode_cell({r:0, c:C})];
+    if (cell) cell.s = { font:{bold:true, color:{rgb:'FFFFFF'}}, fill:{fgColor:{rgb:'0E9E8A'}}, alignment:{horizontal:'center',wrapText:true} };
+  }
+  // Độ rộng cột Sheet 2
+  ws2['!cols'] = [
+    {wch:5},{wch:35},{wch:30},{wch:14},{wch:55},
+    {wch:18},{wch:18},{wch:15},{wch:18},{wch:15},{wch:14},{wch:20},{wch:20},{wch:25}
+  ];
+  ws2['!freeze'] = {xSplit:0, ySplit:1};
+  XLSX.utils.book_append_sheet(wb, ws2, 'Chi tiet dien bien');
+ 
+  // ── XUẤT FILE ──
+  const now = new Date().toLocaleDateString('vi-VN').replace(/\//g, '-');
+  XLSX.writeFile(wb, `BaoCao_CongTrinh_${now}.xlsx`);
+  showToast('Đã xuất file Excel thành công', 'success');
 }
  
 // ══ HELPERS ══
