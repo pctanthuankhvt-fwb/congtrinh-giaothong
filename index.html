@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Theo Dõi Tiến Độ Công Trình Đồng bộ Giao Thông</title>
+<title>Theo Dõi Tiến Độ Công Trình Giao Thông</title>
 <style>
   :root {
     --navy:#1a2744;--navy-mid:#243461;--blue:#2f6fd4;--blue-lt:#e8f0fb;
@@ -20,7 +20,7 @@
   body{font-family:var(--font);background:var(--gray-50);color:var(--gray-800);min-height:100vh;}
   button{cursor:pointer;font-family:inherit;}
   input,textarea,select{font-family:inherit;}
- 
+
   /* LOGIN */
   #login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 60%,var(--blue) 100%);}
   .login-card{background:var(--white);border-radius:16px;padding:48px 40px 40px;width:100%;max-width:420px;box-shadow:var(--shadow-md);}
@@ -35,7 +35,7 @@
   .btn-primary{width:100%;padding:13px;background:var(--navy);color:var(--white);border:none;border-radius:var(--radius);font-size:15px;font-weight:600;transition:background .2s;}
   .btn-primary:hover{background:var(--navy-mid);}
   .login-err{background:var(--red-lt);color:var(--red);border-radius:8px;padding:10px 14px;font-size:13px;margin-top:14px;display:none;}
- 
+
   /* APP */
   #app-screen{display:none;min-height:100vh;flex-direction:column;}
   .topbar{background:var(--navy);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.18);}
@@ -48,18 +48,18 @@
   .user-email{color:rgba(255,255,255,.85);font-size:12px;}
   .btn-logout{background:rgba(255,255,255,.12);border:none;color:rgba(255,255,255,.7);border-radius:8px;padding:6px 12px;font-size:12px;}
   .btn-logout:hover{background:rgba(255,255,255,.2);}
- 
+
   /* NAV */
   .nav-tabs{background:var(--white);border-bottom:2px solid var(--gray-100);padding:0 24px;display:flex;gap:4px;}
   .nav-tab{padding:14px 20px 12px;border:none;background:none;font-size:13px;font-weight:600;color:var(--gray-400);border-bottom:2px solid transparent;margin-bottom:-2px;display:flex;align-items:center;gap:7px;transition:color .2s,border-color .2s;}
   .nav-tab:hover{color:var(--navy);}
   .nav-tab.active{color:var(--navy);border-bottom-color:var(--blue);}
- 
+
   /* MAIN */
   .main{padding:24px;max-width:1200px;margin:0 auto;flex:1;}
   .page-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px;}
   .page-title{font-size:20px;font-weight:700;color:var(--navy);}
- 
+
   /* STATS */
   .stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:10px;}
   .stat-card{background:var(--white);border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow);display:flex;align-items:center;gap:14px;}
@@ -77,7 +77,7 @@
   .stat-note-item .tooltip{visibility:hidden;opacity:0;position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:var(--navy);color:var(--white);font-size:11px;padding:6px 10px;border-radius:7px;white-space:nowrap;z-index:200;transition:opacity .2s;pointer-events:none;}
   .stat-note-item .tooltip::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--navy);}
   .stat-note-item:hover .tooltip{visibility:visible;opacity:1;}
- 
+
   /* TOOLBAR */
   .toolbar{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;align-items:center;}
   .search-box{flex:1;min-width:200px;display:flex;align-items:center;gap:8px;background:var(--white);border:1.5px solid var(--gray-200);border-radius:var(--radius);padding:9px 14px;}
@@ -85,7 +85,7 @@
   .filter-select{padding:9px 14px;border:1.5px solid var(--gray-200);border-radius:var(--radius);font-size:13px;background:var(--white);outline:none;}
   .btn-add{padding:9px 18px;background:var(--blue);color:var(--white);border:none;border-radius:var(--radius);font-size:13px;font-weight:600;display:flex;align-items:center;gap:7px;}
   .btn-add:hover{background:#2460bc;}
- 
+
   /* TABLE */
   .table-wrap{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;}
   table{width:100%;border-collapse:collapse;}
@@ -94,7 +94,7 @@
   td{padding:14px 16px;font-size:13px;border-bottom:1px solid var(--gray-100);vertical-align:middle;}
   tr:last-child td{border-bottom:none;}
   tr:hover td{background:var(--gray-50);}
- 
+
   /* BADGE */
   .badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;}
   .badge::before{content:'';width:6px;height:6px;border-radius:50%;background:currentColor;}
@@ -103,17 +103,17 @@
   .badge.do{background:var(--red-lt);color:var(--red);}
   .badge.xam{background:var(--gray-100);color:var(--gray-600);}
   .badge.navy{background:var(--blue-lt);color:var(--blue);}
- 
+
   /* BTN ICON */
   .btn-icon{width:32px;height:32px;border:none;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;font-size:13px;transition:background .2s;}
   .btn-icon.view{background:var(--blue-lt);color:var(--blue);}
   .btn-icon.edit{background:var(--amber-lt);color:var(--amber);}
   .btn-icon.del{background:var(--red-lt);color:var(--red);}
   .btn-icon:hover{filter:brightness(.92);}
- 
+
   /* EMPTY */
   .empty-state{text-align:center;padding:60px 20px;color:var(--gray-400);}
- 
+
   /* MODAL */
   .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;z-index:1000;padding:20px;}
   .modal-backdrop.open{display:flex;}
@@ -136,7 +136,7 @@
   .btn-save{padding:10px 24px;background:var(--blue);color:var(--white);border:none;border-radius:var(--radius);font-size:13px;font-weight:600;}
   .btn-save:hover{background:#2460bc;}
   .btn-save.danger{background:var(--red);}
- 
+
   /* DETAIL */
   .detail-header{background:var(--navy);padding:28px;border-radius:16px 16px 0 0;}
   .detail-header h2{color:var(--white);font-size:18px;margin-bottom:10px;}
@@ -145,7 +145,7 @@
   .detail-body{padding:24px 28px;}
   .section-title{font-size:13px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px;margin-top:24px;padding-bottom:8px;border-bottom:2px solid var(--gray-100);display:flex;align-items:center;gap:8px;}
   .section-title:first-child{margin-top:0;}
- 
+
   /* TIMELINE */
   .timeline{position:relative;padding-left:28px;}
   .timeline::before{content:'';position:absolute;left:9px;top:0;bottom:0;width:2px;background:var(--gray-200);}
@@ -160,7 +160,7 @@
   .timeline-tag{font-size:11px;padding:2px 8px;border-radius:4px;background:var(--blue-lt);color:var(--blue);font-weight:600;}
   .timeline-tag.unit{background:var(--teal-lt);color:var(--teal);}
   .timeline-link{font-size:11px;color:var(--blue);display:flex;align-items:center;gap:4px;margin-top:6px;}
- 
+
   /* XÁC NHẬN BOX — UPDATED */
   .xacnhan-box{margin-top:12px;padding:12px 14px;background:var(--white);border:1px solid var(--gray-200);border-radius:8px;}
   .xacnhan-box.done{background:var(--green-lt);border-color:var(--green);}
@@ -173,7 +173,7 @@
   .xacnhan-pending-txt{font-size:12px;color:var(--gray-400);display:flex;align-items:center;gap:5px;}
   .btn-xacnhan{padding:7px 14px;background:var(--green);color:var(--white);border:none;border-radius:6px;font-size:12px;font-weight:600;display:flex;align-items:center;gap:6px;white-space:nowrap;flex-shrink:0;}
   .btn-xacnhan:hover{background:#219a52;}
- 
+
   /* PROFILE */
   .profile-card{background:var(--white);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow);max-width:500px;}
   .profile-card h3{font-size:16px;font-weight:700;color:var(--navy);margin-bottom:20px;display:flex;align-items:center;gap:8px;}
@@ -187,25 +187,25 @@
   input:checked + .toggle-slider{background:var(--teal);}
   input:checked + .toggle-slider:before{transform:translateX(20px);}
   .btn-save-profile{margin-top:20px;padding:10px 24px;background:var(--blue);color:var(--white);border:none;border-radius:var(--radius);font-size:13px;font-weight:600;}
- 
+
   /* REPORT */
   .report-card{background:var(--white);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);margin-bottom:16px;}
   .report-card h3{font-size:15px;font-weight:700;color:var(--navy);margin-bottom:6px;}
   .report-card p{font-size:13px;color:var(--gray-600);margin-bottom:16px;}
   .btn-export{padding:10px 20px;background:var(--teal);color:var(--white);border:none;border-radius:var(--radius);font-size:13px;font-weight:600;display:inline-flex;align-items:center;gap:8px;}
   .btn-export:hover{background:#0b8a79;}
- 
+
   /* TOAST */
   .toast{position:fixed;bottom:24px;right:24px;background:var(--navy);color:var(--white);padding:12px 20px;border-radius:10px;font-size:13px;display:none;align-items:center;gap:10px;z-index:9999;box-shadow:var(--shadow-md);animation:slideUp .3s ease;}
   .toast.show{display:flex;}
   .toast.success{background:var(--teal);}
   .toast.error{background:var(--red);}
   @keyframes slideUp{from{transform:translateY(20px);opacity:0;}to{transform:translateY(0);opacity:1;}}
- 
+
   .loading{text-align:center;padding:48px;color:var(--gray-400);font-size:14px;}
   .spinner{width:32px;height:32px;border:3px solid var(--gray-200);border-top-color:var(--blue);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 16px;}
   @keyframes spin{to{transform:rotate(360deg);}}
- 
+
   @media(max-width:700px){
     .main{padding:16px;}
     .mform-row{grid-template-columns:1fr;}
@@ -217,15 +217,15 @@
 </style>
 </head>
 <body>
- 
+
 <!-- LOGIN -->
 <div id="login-screen">
   <div class="login-card">
     <div class="login-logo">
       <div class="icon-wrap">🛣️</div>
-      <h1>Theo Dõi Tiến Độ<br>Công Trình Đồng Bộ Giao Thông</h1>
+      <h1>Theo Dõi Tiến Độ<br>Công Trình Giao Thông</h1>
     </div>
-    <p class="login-sub">Công ty Điện lực Tân Thuận — Hệ thống nội bộ</p>
+    <p class="login-sub">Điện lực TP.HCM — Hệ thống nội bộ</p>
     <div class="form-group">
       <label>Email công ty</label>
       <input type="email" id="inp-email" placeholder="ten@hcmpc.com.vn"/>
@@ -240,7 +240,7 @@
     <div class="login-err" id="login-err"></div>
   </div>
 </div>
- 
+
 <!-- APP -->
 <div id="app-screen" style="display:none;flex-direction:column;">
   <div class="topbar">
@@ -248,7 +248,7 @@
       <span style="font-size:20px">🛣️</span>
       <div>
         <div class="topbar-title">Công Trình Đồng Bộ Giao Thông</div>
-        <div class="topbar-sub">Tổng Công ty Điện lực TP.HCM — PCTT</div>
+        <div class="topbar-sub">Điện lực TP.HCM — PCTT</div>
       </div>
     </div>
     <div class="topbar-right">
@@ -259,16 +259,16 @@
       <button class="btn-logout" onclick="doLogout()">Đăng xuất</button>
     </div>
   </div>
- 
+
   <div class="nav-tabs">
     <button class="nav-tab active" onclick="switchTab('list',this)">📋 Danh sách công trình</button>
     <button class="nav-tab" onclick="switchTab('report',this)">📊 Xuất báo cáo</button>
     <button class="nav-tab" onclick="switchTab('profile',this)">⚙️ Cài đặt cá nhân</button>
     <button class="nav-tab" id="tab-admin-btn" style="display:none" onclick="switchTab('admin',this)">👥 Quản lý người dùng</button>
   </div>
- 
+
   <div class="main">
- 
+
     <!-- TAB: Danh sách -->
     <div id="tab-list">
       <!-- Stats: 2 dòng x 3 ô đều nhau -->
@@ -340,7 +340,7 @@
         </table>
       </div>
     </div>
- 
+
     <!-- TAB: Báo cáo -->
     <div id="tab-report" style="display:none">
       <div class="page-header"><div class="page-title">Xuất báo cáo</div></div>
@@ -355,7 +355,7 @@
         <button class="btn-export" onclick="exportExcel()">⬇️ Xuất file Excel (.xlsx)</button>
       </div>
     </div>
- 
+
     <!-- TAB: Cài đặt cá nhân -->
     <div id="tab-profile" style="display:none">
       <div class="page-header"><div class="page-title">Cài đặt cá nhân</div></div>
@@ -396,7 +396,7 @@
         <button class="btn-save-profile" onclick="changePassword()">🔑 Đổi mật khẩu</button>
       </div>
     </div>
- 
+
     <!-- TAB: Admin -->
     <div id="tab-admin-panel" style="display:none">
       <div class="page-header">
@@ -410,10 +410,10 @@
         </table>
       </div>
     </div>
- 
+
   </div>
 </div>
- 
+
 <!-- MODAL: Thêm/Sửa Công Trình -->
 <div class="modal-backdrop" id="modal-ct">
   <div class="modal">
@@ -464,7 +464,7 @@
     </div>
   </div>
 </div>
- 
+
 <!-- MODAL: Chi tiết -->
 <div class="modal-backdrop" id="modal-detail">
   <div class="modal" style="max-width:700px">
@@ -484,7 +484,7 @@
     </div>
   </div>
 </div>
- 
+
 <!-- MODAL: Thêm Diễn Biến -->
 <div class="modal-backdrop" id="modal-db">
   <div class="modal">
@@ -536,7 +536,7 @@
     </div>
   </div>
 </div>
- 
+
 <!-- MODAL: Thêm User -->
 <div class="modal-backdrop" id="modal-user">
   <div class="modal" style="max-width:460px">
@@ -566,7 +566,7 @@
     </div>
   </div>
 </div>
- 
+
 <!-- MODAL: Sửa Diễn Biến (chỉ khi chưa xác nhận) -->
 <div class="modal-backdrop" id="modal-sua-db">
   <div class="modal">
@@ -577,7 +577,7 @@
     <div class="modal-body">
       <input type="hidden" id="sua-db-id"/>
       <div style="background:var(--amber-lt);border:1px solid var(--amber);border-radius:8px;padding:10px 14px;font-size:12px;color:var(--amber);margin-bottom:18px;">
-        ⚠️ Chỉ có thể sửa diễn biến <b>chưa xác nhận</b>. Sau khi xác nhận, liên hệ Admin để chỉnh sửa.
+        ⚠️ Chỉ có thể sửa diễn biến <b>chưa xác nhận</b>. Sau khi xác nhận, liên hệ Admin để chỉnh sửa qua Supabase.
       </div>
       <div class="mform-row">
         <div class="mform-group">
@@ -623,7 +623,7 @@
     </div>
   </div>
 </div>
- 
+
 <!-- MODAL: Xác nhận xóa -->
 <div class="modal-backdrop" id="modal-del">
   <div class="modal" style="max-width:400px">
@@ -640,31 +640,31 @@
     </div>
   </div>
 </div>
- 
+
 <div class="toast" id="toast"><span id="toast-msg"></span></div>
- 
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script>
 const SUPABASE_URL = 'https://ogsmeqzaadbptkfihpll.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_jiemX5EFR6BsTl6Kjne1BQ_wB50syVO';
+const SUPABASE_KEY = 'PASTE_YOUR_PUBLISHABLE_KEY_HERE';
 const FUNCTION_URL = 'https://ogsmeqzaadbptkfihpll.supabase.co/functions/v1/gui-email';
- 
+
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
- 
+
 let currentUser = null;
 let currentRole = 'Viewer';
 let allCT       = [];
 let allUsers    = {}; // map user_id -> ho_ten
 let currentCTId = null;
 let deleteTarget= null;
- 
+
 // ══ INIT ══
 window.addEventListener('DOMContentLoaded', async () => {
   const { data: { session } } = await sb.auth.getSession();
   if (session) await onLogin(session.user);
 });
- 
+
 // ══ AUTH ══
 async function doLogin() {
   const email = document.getElementById('inp-email').value.trim();
@@ -683,14 +683,14 @@ async function doLogin() {
   await onLogin(data.user);
 }
 document.getElementById('inp-pass').addEventListener('keydown', e => { if (e.key==='Enter') doLogin(); });
- 
+
 async function onLogin(user) {
   currentUser = user;
   document.getElementById('login-screen').style.display = 'none';
   document.getElementById('app-screen').style.display   = 'flex';
   document.getElementById('user-email-display').textContent = user.email;
   document.getElementById('user-avatar').textContent = user.email[0].toUpperCase();
- 
+
   // Lấy phân quyền
   const { data: pq } = await sb.from('phan_quyen').select('*').eq('user_id', user.id).single();
   currentRole = pq ? pq.vai_tro : 'Viewer';
@@ -700,17 +700,17 @@ async function onLogin(user) {
     document.getElementById('toggle-nhacnho').checked = pq.nhan_thong_bao !== false;
     document.getElementById('toggle-capnhat').checked = pq.nhan_thong_bao !== false;
   }
- 
+
   // Load bảng tên người dùng để tra cứu
   await loadAllUsers();
   await loadCT();
 }
- 
+
 async function doLogout() {
   await sb.auth.signOut();
   location.reload();
 }
- 
+
 // ══ LOAD TÊN NGƯỜI DÙNG ══
 async function loadAllUsers() {
   const { data } = await sb.from('phan_quyen').select('user_id, ho_ten, email');
@@ -720,11 +720,11 @@ async function loadAllUsers() {
     });
   }
 }
- 
+
 function getTen(userId) {
   return allUsers[userId] || 'Không rõ';
 }
- 
+
 // ══ TABS ══
 function switchTab(name, el) {
   document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
@@ -735,7 +735,7 @@ function switchTab(name, el) {
   document.getElementById('tab-'+(name==='admin'?'admin-panel':name)).style.display = 'block';
   if (name==='admin') loadUsers();
 }
- 
+
 // ══ CÔNG TRÌNH ══
 async function loadCT() {
   const { data } = await sb.from('cong_trinh').select('*').order('ngay_tao', { ascending: false });
@@ -743,7 +743,7 @@ async function loadCT() {
   updateStats();
   renderTable();
 }
- 
+
 function updateStats() {
   document.getElementById('stat-total').textContent   = allCT.length;
   document.getElementById('stat-gd1').textContent     = allCT.filter(c=>c.trang_thai_tong==='GĐ 1: Khảo sát ảnh hưởng lưới điện, cung cấp khái toán').length;
@@ -752,7 +752,7 @@ function updateStats() {
   document.getElementById('stat-hoantat').textContent = allCT.filter(c=>c.trang_thai_tong==='GĐ 4: Hoàn tất').length;
   document.getElementById('stat-tamdung').textContent = allCT.filter(c=>c.trang_thai_tong==='Tạm dừng').length;
 }
- 
+
 function renderTable() {
   const kw     = document.getElementById('search-inp').value.toLowerCase();
   const status = document.getElementById('filter-status').value;
@@ -781,7 +781,7 @@ function renderTable() {
       </td>
     </tr>`).join('');
 }
- 
+
 function openModalCT(id=null) {
   document.getElementById('ct-id').value = id||'';
   document.getElementById('modal-ct-title').textContent = id?'Sửa công trình':'Thêm công trình mới';
@@ -801,7 +801,7 @@ function openModalCT(id=null) {
   }
   openModal('modal-ct');
 }
- 
+
 async function saveCT() {
   const id  = document.getElementById('ct-id').value;
   const ten = document.getElementById('ct-ten').value.trim();
@@ -823,14 +823,14 @@ async function saveCT() {
   closeModal('modal-ct');
   await loadCT();
 }
- 
+
 // ══ CHI TIẾT ══
 async function openDetail(id) {
   currentCTId = id;
   const ct = allCT.find(x=>x.id===id);
   const { data: dbs } = await sb.from('dien_bien')
     .select('*').eq('id_cong_trinh',id).order('ngay_dien_bien',{ascending:false});
- 
+
   const dbHTML = dbs && dbs.length ? dbs.map(d => {
     const laKhongCoDB = d.loai_dien_bien === 'khong_co_dien_bien';
     return `
@@ -855,7 +855,7 @@ async function openDetail(id) {
       </div>
     </div>`;
   }).join('') : '<p style="color:var(--gray-400);font-size:13px">Chưa có diễn biến nào.</p>';
- 
+
   document.getElementById('detail-content').innerHTML = `
     <div class="detail-header">
       <h2>${ct.ten_cong_trinh}</h2>
@@ -876,7 +876,7 @@ async function openDetail(id) {
   document.getElementById('btn-khong-co-db').style.display  = coQuyen ? 'flex' : 'none';
   openModal('modal-detail');
 }
- 
+
 function renderXacNhanBox(d, ct) {
   // Viewer chỉ xem, không thấy nút
   if (currentRole==='Viewer') {
@@ -885,7 +885,7 @@ function renderXacNhanBox(d, ct) {
         <div class="xacnhan-pending-txt">⏳ Chưa xác nhận cập nhật</div>
       </div>`;
   }
- 
+
   if (d.da_xac_nhan) {
     const tenCapNhat = d.nguoi_cap_nhat ? getTen(d.nguoi_cap_nhat) : '—';
     const tenXacNhan = d.nguoi_xac_nhan ? getTen(d.nguoi_xac_nhan) : '—';
@@ -909,7 +909,7 @@ function renderXacNhanBox(d, ct) {
         </div>
       </div>`;
   }
- 
+
   // Chưa xác nhận — hiển thị nút Sửa + Xác nhận cho Editor/Admin
   if (currentRole === 'Viewer') return '';
   return `
@@ -936,7 +936,7 @@ function renderXacNhanBox(d, ct) {
       </div>
     </div>`;
 }
- 
+
 async function xacNhanCapNhat(dbId, tenCongTrinh, noiDung, loai) {
   const { error } = await sb.from('dien_bien').update({
     da_xac_nhan:      true,
@@ -946,7 +946,7 @@ async function xacNhanCapNhat(dbId, tenCongTrinh, noiDung, loai) {
     thang_xac_nhan:   fmtThang(new Date()),
   }).eq('id', dbId);
   if (error) { showToast('Lỗi xác nhận: '+error.message,'error'); return; }
- 
+
   // Gửi email Loại 1 — chỉ khi là diễn biến thực tế
   if (loai !== 'khong_co_dien_bien') {
     try {
@@ -967,7 +967,7 @@ async function xacNhanCapNhat(dbId, tenCongTrinh, noiDung, loai) {
   }
   await openDetail(currentCTId);
 }
- 
+
 // ══ HELPER: Đọc data attributes từ nút bấm ══
 function xacNhanCapNhatBtn(btn) {
   const dbId    = btn.getAttribute('data-dbid');
@@ -975,13 +975,13 @@ function xacNhanCapNhatBtn(btn) {
   const noiDung = btn.getAttribute('data-noidung');
   xacNhanCapNhat(dbId, ctName, noiDung, 'thuc_te');
 }
- 
+
 function xacNhanKhongCoDBBtn(btn) {
   const ctId   = btn.getAttribute('data-ctid');
   const ctName = btn.getAttribute('data-ctname');
   xacNhanKhongCoDB(ctId, ctName);
 }
- 
+
 // ══ SỬA DIỄN BIẾN (chỉ khi chưa xác nhận) ══
 async function moSuaDB(dbId) {
   // Lấy dữ liệu diễn biến hiện tại
@@ -989,7 +989,7 @@ async function moSuaDB(dbId) {
     .select('*').eq('id', dbId).single();
   if (error || !db) { showToast('Không tìm thấy diễn biến', 'error'); return; }
   if (db.da_xac_nhan) { showToast('Diễn biến đã xác nhận — không thể sửa', 'error'); return; }
- 
+
   // Điền dữ liệu vào form
   document.getElementById('sua-db-id').value         = db.id;
   document.getElementById('sua-db-ngay').value        = db.ngay_dien_bien;
@@ -1001,13 +1001,13 @@ async function moSuaDB(dbId) {
   document.getElementById('sua-db-ghichu').value      = db.ghi_chu || '';
   openModal('modal-sua-db');
 }
- 
+
 async function luuSuaDB() {
   const dbId    = document.getElementById('sua-db-id').value;
   const noidung = document.getElementById('sua-db-noidung').value.trim();
   const ngay    = document.getElementById('sua-db-ngay').value;
   if (!noidung || !ngay) { showToast('Vui lòng nhập ngày và nội dung', 'error'); return; }
- 
+
   const { error } = await sb.from('dien_bien').update({
     ngay_dien_bien:   ngay,
     noi_dung:         noidung,
@@ -1018,35 +1018,35 @@ async function luuSuaDB() {
     ghi_chu:          document.getElementById('sua-db-ghichu').value,
     ngay_cap_nhat:    new Date().toISOString(),
   }).eq('id', dbId).eq('da_xac_nhan', false); // Bảo vệ: chỉ sửa khi chưa xác nhận
- 
+
   if (error) { showToast('Lỗi lưu chỉnh sửa: ' + error.message, 'error'); return; }
   showToast('Đã lưu chỉnh sửa thành công', 'success');
   closeModal('modal-sua-db');
   await openDetail(currentCTId);
 }
- 
+
 function xacNhanKhongCoDBModal() {
   const ct = allCT.find(x=>x.id===currentCTId);
   if (ct) xacNhanKhongCoDB(ct.id, ct.ten_cong_trinh);
 }
- 
+
 async function xacNhanKhongCoDB(ctId, tenCongTrinh) {
   const now      = new Date();
   const thang    = fmtThang(now);
   const noidung  = `Khong co dien bien moi trong thang ${thang}`;
- 
+
   // Kiểm tra đã có xác nhận không có diễn biến trong tháng này chưa
   const { data: existing } = await sb.from('dien_bien')
     .select('id')
     .eq('id_cong_trinh', ctId)
     .eq('loai_dien_bien', 'khong_co_dien_bien')
     .eq('thang_xac_nhan', thang);
- 
+
   if (existing && existing.length > 0) {
     showToast('Công trình này đã được xác nhận không có diễn biến trong tháng ' + thang, 'error');
     return;
   }
- 
+
   // Tạo diễn biến đặc biệt
   const { data: newDB, error } = await sb.from('dien_bien').insert({
     id_cong_trinh:    ctId,
@@ -1061,13 +1061,13 @@ async function xacNhanKhongCoDB(ctId, tenCongTrinh) {
     nguoi_xac_nhan:   currentUser.id,
     ngay_cap_nhat:    now.toISOString(),
   }).select().single();
- 
+
   if (error) { showToast('Lỗi: '+error.message,'error'); return; }
   showToast('Đã xác nhận không có diễn biến tháng ' + thang, 'success');
   await openDetail(currentCTId);
   await loadCT();
 }
- 
+
 // ══ DIỄN BIẾN ══
 function openModalDB() {
   document.getElementById('db-ct-id').value   = currentCTId;
@@ -1079,7 +1079,7 @@ function openModalDB() {
   document.getElementById('db-ghichu').value  = '';
   openModal('modal-db');
 }
- 
+
 async function saveDB() {
   const noidung = document.getElementById('db-noidung').value.trim();
   const ngay    = document.getElementById('db-ngay').value;
@@ -1103,7 +1103,7 @@ async function saveDB() {
   await openDetail(currentCTId);
   await loadCT();
 }
- 
+
 // ══ XÓA ══
 function openDel(id) { deleteTarget=id; openModal('modal-del'); }
 async function confirmDelete() {
@@ -1113,7 +1113,7 @@ async function confirmDelete() {
   closeModal('modal-del');
   await loadCT();
 }
- 
+
 // ══ PROFILE ══
 async function saveProfile() {
   const nhanTB = document.getElementById('toggle-nhacnho').checked;
@@ -1121,7 +1121,7 @@ async function saveProfile() {
   if (error) { showToast('Lỗi lưu cài đặt: '+error.message,'error'); return; }
   showToast('Đã lưu cài đặt thông báo','success');
 }
- 
+
 async function changePassword() {
   const newPass     = document.getElementById('new-pass').value;
   const confirmPass = document.getElementById('confirm-pass').value;
@@ -1133,7 +1133,7 @@ async function changePassword() {
   document.getElementById('confirm-pass').value = '';
   showToast('Đã đổi mật khẩu thành công','success');
 }
- 
+
 // ══ ADMIN ══
 async function loadUsers() {
   const { data } = await sb.from('phan_quyen').select('*').order('ngay_tao');
@@ -1152,9 +1152,9 @@ async function loadUsers() {
       <td><button class="btn-icon del" onclick="deleteUser('${u.id}')">🗑</button></td>
     </tr>`).join('');
 }
- 
+
 function openModalUser() { openModal('modal-user'); }
- 
+
 async function saveUser() {
   const email  = document.getElementById('u-email').value.trim();
   const pass   = document.getElementById('u-pass').value;
@@ -1175,21 +1175,21 @@ async function saveUser() {
   closeModal('modal-user');
   loadUsers();
 }
- 
+
 async function deleteUser(id) {
   if (!confirm('Xóa người dùng này?')) return;
   await sb.from('phan_quyen').delete().eq('id',id);
   showToast('Đã xóa người dùng','success');
   loadUsers();
 }
- 
+
 // ══ BÁO CÁO ══
 async function exportReport() {
   showToast('Đang tạo báo cáo...','');
   const { data: cts } = await sb.from('cong_trinh').select('*').order('ngay_tao');
   const { data: dbs } = await sb.from('dien_bien').select('*').order('ngay_dien_bien',{ascending:false});
   const now = new Date().toLocaleDateString('vi-VN');
- 
+
   // Lấy diễn biến mới nhất (thực tế, không phải loại "không có diễn biến") cho từng CT
   function getDienBienMoiNhat(ctId) {
     if (!dbs) return null;
@@ -1198,7 +1198,7 @@ async function exportReport() {
       d.loai_dien_bien !== 'khong_co_dien_bien'
     ) || null;
   }
- 
+
   let html = `<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
   <title>Báo cáo tiến độ</title>
   <style>
@@ -1290,14 +1290,14 @@ async function exportReport() {
   a.click();
   showToast('Đã xuất báo cáo thành công','success');
 }
- 
+
 async function exportExcel() {
   showToast('Đang tạo file Excel...', '');
- 
+
   // Lấy dữ liệu
   const { data: cts } = await sb.from('cong_trinh').select('*').order('ngay_tao');
   const { data: dbs } = await sb.from('dien_bien').select('*').order('ngay_dien_bien', { ascending: false });
- 
+
   // Helper: lấy diễn biến mới nhất (thực tế) của 1 công trình
   function dbMoiNhat(ctId) {
     return (dbs||[]).find(d =>
@@ -1305,7 +1305,7 @@ async function exportExcel() {
       d.loai_dien_bien !== 'khong_co_dien_bien'
     ) || null;
   }
- 
+
   // ── SHEET 1: Danh sách công trình + diễn biến mới nhất ──
   const hdSheet1 = [
     'STT', 'Tên công trình', 'Loại công trình', 'Chủ đầu tư',
@@ -1331,7 +1331,7 @@ async function exportExcel() {
       db ? (db.da_xac_nhan ? 'Đã xác nhận' : 'Chưa xác nhận') : '',
     ];
   });
- 
+
   // ── SHEET 2: Chi tiết tất cả diễn biến ──
   const hdSheet2 = [
     'STT', 'Tên công trình', 'Giai đoạn',
@@ -1340,19 +1340,27 @@ async function exportExcel() {
     'Loại diễn biến', 'Đã xác nhận', 'Ngày xác nhận',
     'Người cập nhật', 'Người xác nhận', 'Ghi chú'
   ];
- 
-  // Map công trình theo id
+
+  // Map công trình theo id + vị trí (để tô màu chẵn/lẻ)
   const ctMap = {};
-  (cts||[]).forEach(c => { ctMap[c.id] = c; });
- 
+  const ctIndex = {};
+  (cts||[]).forEach((c, i) => {
+    ctMap[c.id]  = c;
+    ctIndex[c.id] = i; // vị trí 0, 1, 2... dùng để xác định chẵn/lẻ
+  });
+
+  // Màu nền xen kẽ theo công trình
+  const MauChan = 'FFFFFF'; // trắng — công trình vị trí chẵn
+  const MauLe   = 'E8F0FB'; // xanh nhạt — công trình vị trí lẻ
+
   // Sắp xếp: theo công trình (thứ tự ngay_tao), rồi theo ngày diễn biến mới nhất trước
   const dbSorted = [...(dbs||[])].sort((a, b) => {
-    const ctA = cts ? cts.findIndex(c => c.id === a.id_cong_trinh) : 0;
-    const ctB = cts ? cts.findIndex(c => c.id === b.id_cong_trinh) : 0;
+    const ctA = ctIndex[a.id_cong_trinh] ?? 999;
+    const ctB = ctIndex[b.id_cong_trinh] ?? 999;
     if (ctA !== ctB) return ctA - ctB;
     return new Date(b.ngay_dien_bien) - new Date(a.ngay_dien_bien);
   });
- 
+
   let stt2 = 1;
   const rowsSheet2 = dbSorted.map(d => {
     const ct = ctMap[d.id_cong_trinh] || {};
@@ -1369,53 +1377,86 @@ async function exportExcel() {
       laDacBiet ? 'Không có diễn biến' : 'Thực tế',
       d.da_xac_nhan ? 'Đã xác nhận' : 'Chưa xác nhận',
       d.ngay_xac_nhan ? fmtDate(d.ngay_xac_nhan) : '',
-      d.nguoi_cap_nhat  ? (allUsers[d.nguoi_cap_nhat]  || d.nguoi_cap_nhat)  : '',
-      d.nguoi_xac_nhan  ? (allUsers[d.nguoi_xac_nhan]  || d.nguoi_xac_nhan)  : '',
+      d.nguoi_cap_nhat ? (allUsers[d.nguoi_cap_nhat] || d.nguoi_cap_nhat) : '',
+      d.nguoi_xac_nhan ? (allUsers[d.nguoi_xac_nhan] || d.nguoi_xac_nhan) : '',
       d.ghi_chu || '',
     ];
   });
- 
+
   // ── TẠO WORKBOOK ──
   const wb = XLSX.utils.book_new();
- 
+
   // Sheet 1
   const ws1 = XLSX.utils.aoa_to_sheet([hdSheet1, ...rowsSheet1]);
-  // Định dạng header Sheet 1
   const rangeS1 = XLSX.utils.decode_range(ws1['!ref']);
+  // Header Sheet 1
   for (let C = rangeS1.s.c; C <= rangeS1.e.c; C++) {
     const cell = ws1[XLSX.utils.encode_cell({r:0, c:C})];
-    if (cell) cell.s = { font:{bold:true, color:{rgb:'FFFFFF'}}, fill:{fgColor:{rgb:'1A2744'}}, alignment:{horizontal:'center',wrapText:true} };
+    if (cell) cell.s = {
+      font: {bold:true, color:{rgb:'FFFFFF'}},
+      fill: {fgColor:{rgb:'1A2744'}},
+      alignment: {horizontal:'center', wrapText:true}
+    };
   }
-  // Độ rộng cột Sheet 1
+  // Màu xen kẽ Sheet 1 theo từng dòng
+  for (let R = 1; R <= rangeS1.e.r; R++) {
+    const mau = R % 2 === 0 ? 'F7F8FA' : 'FFFFFF';
+    for (let C = rangeS1.s.c; C <= rangeS1.e.c; C++) {
+      const addr = XLSX.utils.encode_cell({r:R, c:C});
+      if (!ws1[addr]) ws1[addr] = {t:'s', v:''};
+      ws1[addr].s = {
+        fill: {fgColor:{rgb:mau}},
+        alignment: {vertical:'top', wrapText:true},
+      };
+    }
+  }
   ws1['!cols'] = [
     {wch:5},{wch:35},{wch:15},{wch:25},{wch:30},
     {wch:12},{wch:20},{wch:14},{wch:50},{wch:18},{wch:18},{wch:15},{wch:15}
   ];
-  ws1['!freeze'] = {xSplit:0, ySplit:1}; // Freeze hàng tiêu đề
+  ws1['!freeze'] = {xSplit:0, ySplit:1};
   XLSX.utils.book_append_sheet(wb, ws1, 'Danh sach cong trinh');
- 
+
   // Sheet 2
   const ws2 = XLSX.utils.aoa_to_sheet([hdSheet2, ...rowsSheet2]);
-  // Định dạng header Sheet 2
   const rangeS2 = XLSX.utils.decode_range(ws2['!ref']);
+  // Header Sheet 2
   for (let C = rangeS2.s.c; C <= rangeS2.e.c; C++) {
     const cell = ws2[XLSX.utils.encode_cell({r:0, c:C})];
-    if (cell) cell.s = { font:{bold:true, color:{rgb:'FFFFFF'}}, fill:{fgColor:{rgb:'0E9E8A'}}, alignment:{horizontal:'center',wrapText:true} };
+    if (cell) cell.s = {
+      font: {bold:true, color:{rgb:'FFFFFF'}},
+      fill: {fgColor:{rgb:'0E9E8A'}},
+      alignment: {horizontal:'center', wrapText:true}
+    };
   }
-  // Độ rộng cột Sheet 2
+  // Tô màu xen kẽ Sheet 2 theo công trình (chẵn/lẻ theo ctIndex)
+  dbSorted.forEach((d, idx) => {
+    const viTri = ctIndex[d.id_cong_trinh] ?? 0;
+    const mau   = viTri % 2 === 0 ? MauChan : MauLe;
+    const R     = idx + 1; // +1 vì hàng 0 là header
+    for (let C = rangeS2.s.c; C <= rangeS2.e.c; C++) {
+      const addr = XLSX.utils.encode_cell({r:R, c:C});
+      if (!ws2[addr]) ws2[addr] = {t:'s', v:''};
+      ws2[addr].s = {
+        fill: {fgColor:{rgb:mau}},
+        alignment: {vertical:'top', wrapText:true},
+        ...(C === 4 ? {} : {}), // nội dung dài wrap text
+      };
+    }
+  });
   ws2['!cols'] = [
     {wch:5},{wch:35},{wch:30},{wch:14},{wch:55},
     {wch:18},{wch:18},{wch:15},{wch:18},{wch:15},{wch:14},{wch:20},{wch:20},{wch:25}
   ];
   ws2['!freeze'] = {xSplit:0, ySplit:1};
   XLSX.utils.book_append_sheet(wb, ws2, 'Chi tiet dien bien');
- 
+
   // ── XUẤT FILE ──
   const now = new Date().toLocaleDateString('vi-VN').replace(/\//g, '-');
   XLSX.writeFile(wb, `BaoCao_CongTrinh_${now}.xlsx`);
   showToast('Đã xuất file Excel thành công', 'success');
 }
- 
+
 // ══ HELPERS ══
 function badgeHTML(status) {
   const map={
@@ -1469,4 +1510,3 @@ document.querySelectorAll('.modal-backdrop').forEach(bd=>{
 </script>
 </body>
 </html>
- 
