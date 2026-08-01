@@ -225,7 +225,7 @@
       <div class="icon-wrap">🛣️</div>
       <h1>Theo Dõi Tiến Độ<br>Công Trình Giao Thông</h1>
     </div>
-    <p class="login-sub">Điện lực TP.HCM — Hệ thống nội bộ</p>
+    <p class="login-sub">Công ty Điện lực Tân Thuận — Hệ thống nội bộ</p>
     <div class="form-group">
       <label>Email công ty</label>
       <input type="email" id="inp-email" placeholder="ten@hcmpc.com.vn"/>
@@ -248,7 +248,7 @@
       <span style="font-size:20px">🛣️</span>
       <div>
         <div class="topbar-title">Công Trình Đồng Bộ Giao Thông</div>
-        <div class="topbar-sub">Điện lực TP.HCM — PCTT</div>
+        <div class="topbar-sub">Tổng Công ty Điện lực TP.HCM — PCTT</div>
       </div>
     </div>
     <div class="topbar-right">
@@ -276,10 +276,10 @@
         <!-- Dòng 1: Tổng / GĐ1 / GĐ3 -->
         <div class="stat-card"><div class="stat-icon navy">🏗️</div><div><div class="stat-num" id="stat-total">0</div><div class="stat-lbl">Tổng công trình</div></div></div>
         <div class="stat-card"><div class="stat-icon blue">🔍</div><div><div class="stat-num" id="stat-gd1">0</div><div class="stat-lbl">GĐ 1: Khảo sát</div></div></div>
-        <div class="stat-card"><div class="stat-icon teal">⚙️</div><div><div class="stat-num" id="stat-gd3">0</div><div class="stat-lbl">GĐ 3: Triển khai</div></div></div>
+        <div class="stat-card"><div class="stat-icon teal">⚙️</div><div><div class="stat-num" id="stat-gd3">0</div><div class="stat-lbl">GĐ 3: Triển khai PA</div></div></div>
         <!-- Dòng 2: Tạm dừng / GĐ2 / GĐ4 -->
         <div class="stat-card"><div class="stat-icon" style="background:var(--red-lt);color:var(--red)">⏸️</div><div><div class="stat-num" id="stat-tamdung">0</div><div class="stat-lbl">Tạm dừng</div></div></div>
-        <div class="stat-card"><div class="stat-icon amber">🤝</div><div><div class="stat-num" id="stat-gd2">0</div><div class="stat-lbl">GĐ 2: Thống nhất</div></div></div>
+        <div class="stat-card"><div class="stat-icon amber">🤝</div><div><div class="stat-num" id="stat-gd2">0</div><div class="stat-lbl">GĐ 2: Thống nhất PA</div></div></div>
         <div class="stat-card"><div class="stat-icon purple">✅</div><div><div class="stat-num" id="stat-hoantat">0</div><div class="stat-lbl">GĐ 4: Hoàn tất</div></div></div>
       </div>
       <!-- Dòng ghi chú giai đoạn -->
@@ -292,12 +292,12 @@
         <div class="stat-note-item">
           <span class="dot" style="background:#d97c1a"></span>
           GĐ 2: Đang thống nhất phương án
-          <span class="tooltip">GĐ 2: Phối hợp, thống nhất phương án bồi thường, tái lập</span>
+          <span class="tooltip">GĐ 2: Phối hợp, thống nhất phương án bồi thường, di dời, tái lập</span>
         </div>
         <div class="stat-note-item">
           <span class="dot" style="background:#0e9e8a"></span>
           GĐ 3: Triển khai
-          <span class="tooltip">GĐ 3: Triển khai thực hiện sau khi thống nhất phương án bồi thường, tái lập</span>
+          <span class="tooltip">GĐ 3: Triển khai thực hiện sau khi thống nhất phương án bồi thường, di dời, tái lập</span>
         </div>
         <div class="stat-note-item">
           <span class="dot" style="background:#7c3aed"></span>
@@ -318,8 +318,8 @@
         <select class="filter-select" id="filter-status" onchange="renderTable()">
           <option value="">Tất cả giai đoạn</option>
           <option>GĐ 1: Khảo sát ảnh hưởng lưới điện, cung cấp khái toán</option>
-          <option>GĐ 2: Phối hợp, thống nhất phương án bồi thường, tái lập</option>
-          <option>GĐ 3: Triển khai thực hiện sau khi thống nhất phương án bồi thường, tái lập</option>
+          <option>GĐ 2: Phối hợp, thống nhất phương án bồi thường, di dời, tái lập</option>
+          <option>GĐ 3: Triển khai thực hiện sau khi thống nhất phương án bồi thường, di dời, tái lập</option>
           <option>GĐ 4: Hoàn tất</option>
           <option>Tạm dừng</option>
           <option>Không ảnh hưởng</option>
@@ -441,8 +441,8 @@
           <label>Giai đoạn thực hiện</label>
           <select id="ct-trangthai">
             <option>GĐ 1: Khảo sát ảnh hưởng lưới điện, cung cấp khái toán</option>
-            <option>GĐ 2: Phối hợp, thống nhất phương án bồi thường, tái lập</option>
-            <option>GĐ 3: Triển khai thực hiện sau khi thống nhất phương án bồi thường, tái lập</option>
+            <option>GĐ 2: Phối hợp, thống nhất phương án bồi thường, di dời, tái lập</option>
+            <option>GĐ 3: Triển khai thực hiện sau khi thống nhất phương án bồi thường, di dời, tái lập</option>
             <option>GĐ 4: Hoàn tất</option>
             <option>Tạm dừng</option>
             <option>Không ảnh hưởng</option>
@@ -577,7 +577,7 @@
     <div class="modal-body">
       <input type="hidden" id="sua-db-id"/>
       <div style="background:var(--amber-lt);border:1px solid var(--amber);border-radius:8px;padding:10px 14px;font-size:12px;color:var(--amber);margin-bottom:18px;">
-        ⚠️ Chỉ có thể sửa diễn biến <b>chưa xác nhận</b>. Sau khi xác nhận, liên hệ Admin để chỉnh sửa qua Supabase.
+        ⚠️ Chỉ có thể sửa diễn biến <b>chưa xác nhận</b>. Sau khi xác nhận, liên hệ Admin để chỉnh sửa.
       </div>
       <div class="mform-row">
         <div class="mform-group">
@@ -647,7 +647,7 @@
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script>
 const SUPABASE_URL = 'https://ogsmeqzaadbptkfihpll.supabase.co';
-const SUPABASE_KEY = 'PASTE_YOUR_PUBLISHABLE_KEY_HERE';
+const SUPABASE_KEY = 'sb_publishable_jiemX5EFR6BsTl6Kjne1BQ_wB50syVO';
 const FUNCTION_URL = 'https://ogsmeqzaadbptkfihpll.supabase.co/functions/v1/gui-email';
 
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -747,8 +747,8 @@ async function loadCT() {
 function updateStats() {
   document.getElementById('stat-total').textContent   = allCT.length;
   document.getElementById('stat-gd1').textContent     = allCT.filter(c=>c.trang_thai_tong==='GĐ 1: Khảo sát ảnh hưởng lưới điện, cung cấp khái toán').length;
-  document.getElementById('stat-gd2').textContent     = allCT.filter(c=>c.trang_thai_tong==='GĐ 2: Phối hợp, thống nhất phương án bồi thường, tái lập').length;
-  document.getElementById('stat-gd3').textContent     = allCT.filter(c=>c.trang_thai_tong==='GĐ 3: Triển khai thực hiện sau khi thống nhất phương án bồi thường, tái lập').length;
+  document.getElementById('stat-gd2').textContent     = allCT.filter(c=>c.trang_thai_tong==='GĐ 2: Phối hợp, thống nhất phương án bồi thường, di dời, tái lập').length;
+  document.getElementById('stat-gd3').textContent     = allCT.filter(c=>c.trang_thai_tong==='GĐ 3: Triển khai thực hiện sau khi thống nhất phương án bồi thường, di dời, tái lập').length;
   document.getElementById('stat-hoantat').textContent = allCT.filter(c=>c.trang_thai_tong==='GĐ 4: Hoàn tất').length;
   document.getElementById('stat-tamdung').textContent = allCT.filter(c=>c.trang_thai_tong==='Tạm dừng').length;
 }
@@ -1223,7 +1223,7 @@ async function exportReport() {
   .gd-badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600;background:#e8f0fb;color:#2f6fd4;}
   </style></head><body>
   <h1>Báo cáo tiến độ công trình đồng bộ giao thông</h1>
-  <div class="sub">Điện lực TP.HCM — PCTT | Ngày xuất: ${now}</div>
+  <div class="sub">Tổng công ty Điện lực TP.HCM — PCTT | Ngày xuất: ${now}</div>
   <table>
     <thead>
       <tr>
@@ -1251,8 +1251,8 @@ async function exportReport() {
       // Rút gọn tên giai đoạn cho gọn trong bảng
       const shortGD = {
         'GĐ 1: Khảo sát ảnh hưởng lưới điện, cung cấp khái toán': 'GĐ 1: Khảo sát',
-        'GĐ 2: Phối hợp, thống nhất phương án bồi thường, tái lập': 'GĐ 2: Thống nhất',
-        'GĐ 3: Triển khai thực hiện sau khi thống nhất phương án bồi thường, tái lập': 'GĐ 3: Triển khai',
+        'GĐ 2: Phối hợp, thống nhất phương án bồi thường, di dời, tái lập': 'GĐ 2: Thống nhất',
+        'GĐ 3: Triển khai thực hiện sau khi thống nhất phương án bồi thường, di dời, tái lập': 'GĐ 3: Triển khai',
         'GĐ 4: Hoàn tất': 'GĐ 4: Hoàn tất',
       };
       const gdDisplay = shortGD[c.trang_thai_tong] || c.trang_thai_tong;
@@ -1461,8 +1461,8 @@ async function exportExcel() {
 function badgeHTML(status) {
   const map={
     'GĐ 1: Khảo sát ảnh hưởng lưới điện, cung cấp khái toán':                              'navy',
-    'GĐ 2: Phối hợp, thống nhất phương án bồi thường, tái lập':                            'vang',
-    'GĐ 3: Triển khai thực hiện sau khi thống nhất phương án bồi thường, tái lập':         'xanh',
+    'GĐ 2: Phối hợp, thống nhất phương án bồi thường, di dời, tái lập':                            'vang',
+    'GĐ 3: Triển khai thực hiện sau khi thống nhất phương án bồi thường, di dời, tái lập':         'xanh',
     'GĐ 4: Hoàn tất':                   'purple',
     'Tạm dừng':                         'do',
     'Không ảnh hưởng':                  'xam',
@@ -1475,8 +1475,8 @@ function badgeHTML(status) {
   // Rút gọn tên giai đoạn dài để hiển thị badge gọn
   const shortName = {
     'GĐ 1: Khảo sát ảnh hưởng lưới điện, cung cấp khái toán':                              'GĐ 1: Khảo sát',
-    'GĐ 2: Phối hợp, thống nhất phương án bồi thường, tái lập':                            'GĐ 2: Thống nhất',
-    'GĐ 3: Triển khai thực hiện sau khi thống nhất phương án bồi thường, tái lập':         'GĐ 3: Triển khai',
+    'GĐ 2: Phối hợp, thống nhất phương án bồi thường, di dời, tái lập':                            'GĐ 2: Thống nhất',
+    'GĐ 3: Triển khai thực hiện sau khi thống nhất phương án bồi thường, di dời, tái lập':         'GĐ 3: Triển khai',
     'GĐ 4: Hoàn tất':                   'GĐ 4: Hoàn tất',
   };
   const display = shortName[status] || status || '—';
