@@ -1,15 +1,3 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Theo Dõi Tiến Độ Công Trình Giao Thông</title>
-<style>
-  :root {
-    --navy:#1a2744;--navy-mid:#243461;--blue:#2f6fd4;--blue-lt:#e8f0fb;
-    --teal:#0e9e8a;--teal-lt:#e0f5f2;--amber:#d97c1a;--amber-lt:#fef3e2;
-    --red:#c0392b;--red-lt:#fdecea;--green:#27ae60;--green-lt:#eafaf1;
-    --gray-50:#f7f8fa;--gray-100:#eef0f4;--gray-200:#d8dce6;
     --gray-400:#9aa1b4;--gray-600:#5a6378;--gray-800:#2d3345;
     --white:#ffffff;--radius:10px;
     --shadow:0 2px 12px rgba(26,39,68,.10);
@@ -225,7 +213,7 @@
       <div class="icon-wrap">🏗️</div>
       <h1>Theo Dõi Tiến Độ<br>Công Trình Giao Thông</h1>
     </div>
-    <p class="login-sub">Công ty Điện lực Tân Thuận — Hệ thống nội bộ</p>
+    <p class="login-sub">Điện lực TP.HCM — Hệ thống nội bộ</p>
     <div class="form-group">
       <label>Email công ty</label>
       <input type="email" id="inp-email" placeholder="ten@hcmpc.com.vn"/>
@@ -248,7 +236,7 @@
       <span style="font-size:20px">🏗️</span>
       <div>
         <div class="topbar-title">Công Trình Đồng Bộ Giao Thông</div>
-        <div class="topbar-sub">Tổng công ty Điện lực TP.HCM — PCTT</div>
+        <div class="topbar-sub">Điện lực TP.HCM — PCTT</div>
       </div>
     </div>
     <div class="topbar-right">
@@ -280,7 +268,7 @@
         <!-- Dòng 2: Tạm dừng / GĐ2 / GĐ4 -->
         <div class="stat-card"><div class="stat-icon" style="background:var(--red-lt);color:var(--red)">⏸️</div><div><div class="stat-num" id="stat-tamdung">0</div><div class="stat-lbl">Tạm dừng</div></div></div>
         <div class="stat-card"><div class="stat-icon amber">🤝</div><div><div class="stat-num" id="stat-gd2">0</div><div class="stat-lbl">GĐ 2: Thống nhất</div></div></div>
-        <div class="stat-card"><div class="stat-icon purple">✅</div><div><div class="stat-num" id="stat-hoantat">0</div><div class="stat-lbl">GĐ 4: Hoàn tất</div></div></div>
+        <div class="stat-card"><div class="stat-icon purple">✅</div><div><div class="stat-num" id="stat-hoantat">0</div><div class="stat-lbl">GĐ 4: PH Thi công</div></div></div>
       </div>
       <!-- Dòng ghi chú giai đoạn -->
       <div class="stat-note-row">
@@ -301,7 +289,7 @@
         </div>
         <div class="stat-note-item">
           <span class="dot" style="background:#7c3aed"></span>
-          GĐ 4: Thi công & Hoàn tất
+          GĐ 4: PH Thi công
           <span class="tooltip">GĐ 4: Phối hợp thực hiện thi công & Kết thúc dự án</span>
         </div>
         <div class="stat-note-item">
@@ -337,7 +325,7 @@
           <thead>
             <tr>
               <th>#</th><th>Tên công trình</th><th>Chủ đầu tư</th>
-              <th>Giai đoạn</th><th>Ngày Cập nhật</th><th>Thao tác</th>
+              <th>Giai đoạn</th><th>Cập nhật</th><th>Thao tác</th>
             </tr>
           </thead>
           <tbody id="ct-tbody">
@@ -584,7 +572,7 @@
     <div class="modal-body">
       <input type="hidden" id="sua-db-id"/>
       <div style="background:var(--amber-lt);border:1px solid var(--amber);border-radius:8px;padding:10px 14px;font-size:12px;color:var(--amber);margin-bottom:18px;">
-        ⚠️ Chỉ có thể sửa diễn biến <b>chưa xác nhận</b>. Sau khi xác nhận, liên hệ Admin để chỉnh sửa.
+        ⚠️ Chỉ có thể sửa diễn biến <b>chưa xác nhận</b>. Sau khi xác nhận, liên hệ Admin để chỉnh sửa qua Supabase.
       </div>
       <div class="mform-row">
         <div class="mform-group">
@@ -654,7 +642,7 @@
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script>
 const SUPABASE_URL = 'https://ogsmeqzaadbptkfihpll.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_jiemX5EFR6BsTl6Kjne1BQ_wB50syVO';
+const SUPABASE_KEY = 'PASTE_YOUR_PUBLISHABLE_KEY_HERE';
 const FUNCTION_URL = 'https://ogsmeqzaadbptkfihpll.supabase.co/functions/v1/gui-email';
  
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -1241,7 +1229,7 @@ async function exportReport() {
   .gd-badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600;background:#e8f0fb;color:#2f6fd4;}
   </style></head><body>
   <h1>Báo cáo tiến độ công trình đồng bộ giao thông</h1>
-  <div class="sub">Tổng công ty Điện lực TP.HCM — PCTT | Ngày xuất: ${now}</div>
+  <div class="sub">Điện lực TP.HCM — PCTT | Ngày xuất: ${now}</div>
   <table>
     <thead>
       <tr>
@@ -1271,7 +1259,7 @@ async function exportReport() {
         'GĐ 1: Khảo sát ảnh hưởng lưới điện, lập khái toán bồi thường & di dời, tái lập': 'GĐ 1: Khảo sát',
         'GĐ 2: Phối hợp, thống nhất phương án bồi thường & di dời, tái lập': 'GĐ 2: Thống nhất PA',
         'GĐ 3: Triển khai thực hiện sau khi thống nhất phương án bồi thường & di dời, tái lập': 'GĐ 3: Triển khai PA',
-        'GĐ 4: Phối hợp thực hiện thi công & Kết thúc dự án': 'GĐ 4: Thi công & Hoàn tất',
+        'GĐ 4: Phối hợp thực hiện thi công & Kết thúc dự án': 'GĐ 4: PH Thi công',
         'Hoàn tất kết thúc dự án': 'Hoàn tất',
       };
       const gdDisplay = shortGD[c.trang_thai_tong] || c.trang_thai_tong;
@@ -1502,7 +1490,7 @@ function badgeHTML(status) {
     [GD1]:  'GĐ 1: Khảo sát',
     [GD2]:  'GĐ 2: Thống nhất PA',
     [GD3]:  'GĐ 3: Triển khai PA',
-    [GD4]:  'GĐ 4: Thi công & Hoàn tất',
+    [GD4]:  'GĐ 4: PH Thi công',
     [HTKT]: 'Hoàn tất',
   };
   const isGD4   = status === GD4;
