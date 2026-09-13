@@ -214,6 +214,42 @@
     .topbar-sub{display:none;}
     .xacnhan-people{grid-template-columns:1fr;}
   }
+
+  /* ── PHÂN CÔNG CÔNG TRÌNH ── */
+  .pc-panel{border:1px solid #d0dde8;border-radius:8px;overflow:hidden;margin:16px 28px 0;}
+  .pc-panel-header{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:#eaf1f8;border-bottom:1px solid #d0dde8;cursor:pointer;user-select:none;}
+  .pc-panel-header h4{margin:0;font-size:13px;color:#1a5276;display:flex;align-items:center;gap:8px;font-weight:600;}
+  .pc-panel-body{padding:12px 16px;background:#fff;}
+  .pc-panel-body.hidden{display:none;}
+  .pc-list{list-style:none;margin:0 0 8px;padding:0;display:flex;flex-direction:column;gap:6px;}
+  .pc-item{display:flex;align-items:center;gap:10px;padding:8px 12px;background:#f8fafc;border-radius:6px;border:1px solid #e3eaf2;}
+  .pc-avatar{width:30px;height:30px;border-radius:50%;background:#1a5276;color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .pc-info{flex:1;min-width:0;}
+  .pc-name{font-size:13px;font-weight:600;color:#222;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .pc-email{font-size:11px;color:#888;}
+  .pc-role-badge{flex-shrink:0;font-size:11px;padding:2px 10px;border-radius:12px;font-weight:600;}
+  .pc-role-badge.thuc_hien{background:#d4edda;color:#155724;}
+  .pc-role-badge.tong_hop{background:#cce5ff;color:#004085;}
+  .pc-role-badge.theo_doi{background:#f0f0f0;color:#555;}
+  .pc-remove-btn{background:none;border:none;cursor:pointer;color:#c0392b;font-size:15px;padding:2px 6px;border-radius:4px;line-height:1;}
+  .pc-remove-btn:hover{background:#fdecea;}
+  .pc-empty-msg{font-size:12px;color:#999;font-style:italic;padding:4px 0 6px;}
+  .pc-add-form{display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding-top:8px;border-top:1px solid #e8edf2;margin-top:4px;}
+  .pc-add-form select,.pc-add-form button{height:34px;border-radius:6px;font-size:12px;}
+  .pc-add-form select{flex:1;min-width:130px;border:1px solid #cdd7e0;padding:0 8px;background:#fff;color:#333;outline:none;}
+  .pc-add-form select:focus{border-color:#1a5276;}
+  .pc-add-btn{background:#1a5276;color:#fff;border:none;cursor:pointer;padding:0 14px;white-space:nowrap;}
+  .pc-add-btn:hover{background:#154360;}
+  .pc-add-btn:disabled{background:#aaa;cursor:not-allowed;}
+  .pc-avatars{display:flex;}
+  .pc-avatar-sm{width:24px;height:24px;border-radius:50%;background:#1a5276;color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;border:2px solid #fff;margin-right:-5px;}
+  .pc-avatar-sm.tong_hop{background:#2980b9;}
+  .pc-avatar-sm.theo_doi{background:#95a5a6;}
+  .pc-unassigned{font-size:11px;color:#bbb;font-style:italic;}
+  .user-ct-list{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px;}
+  .user-ct-tag{font-size:11px;background:#eaf1f8;color:#1a5276;border-radius:10px;padding:2px 8px;border:1px solid #c5d9e8;}
+  .user-ct-tag.tong_hop{background:#e8f4fd;border-color:#aed6f1;}
+  .badge-tdt{display:inline-block;font-size:11px;background:#fef3cd;color:#856404;border:1px solid #ffc107;border-radius:10px;padding:1px 8px;margin-left:4px;vertical-align:middle;}
 </style>
 </head>
 <body>
@@ -337,11 +373,11 @@
           <thead>
             <tr>
               <th>#</th><th>Tên công trình</th><th>Chủ đầu tư</th>
-              <th>Giai đoạn</th><th>Ngày Cập nhật</th><th>Thao tác</th>
+              <th>Giai đoạn</th><th>Phân công</th><th>Ngày Cập nhật</th><th>Thao tác</th>
             </tr>
           </thead>
           <tbody id="ct-tbody">
-            <tr><td colspan="6"><div class="loading"><div class="spinner"></div>Đang tải...</div></td></tr>
+            <tr><td colspan="7"><div class="loading"><div class="spinner"></div>Đang tải...</div></td></tr>
           </tbody>
         </table>
       </div>
@@ -411,8 +447,8 @@
       </div>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>Email</th><th>Họ tên</th><th>Vai trò</th><th>Đơn vị</th><th>Nhận TB</th><th>Thao tác</th></tr></thead>
-          <tbody id="user-tbody"><tr><td colspan="6"><div class="loading"><div class="spinner"></div>Đang tải...</div></td></tr></tbody>
+          <thead><tr><th>Email</th><th>Họ tên</th><th>Vai trò</th><th>Đơn vị</th><th>Nhận TB</th><th>Phân công CT</th><th>Nhận tổng hợp</th><th>Thao tác</th></tr></thead>
+          <tbody id="user-tbody"><tr><td colspan="8"><div class="loading"><div class="spinner"></div>Đang tải...</div></td></tr></tbody>
         </table>
       </div>
     </div>
@@ -780,7 +816,7 @@ function renderTable() {
   );
   const tbody = document.getElementById('ct-tbody');
   if (!rows.length) {
-    tbody.innerHTML = `<tr><td colspan="6"><div class="empty-state"><p>Không có công trình nào phù hợp</p></div></td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="7"><div class="empty-state"><p>Không có công trình nào phù hợp</p></div></td></tr>`;
     return;
   }
   tbody.innerHTML = rows.map((c,i) => `
@@ -789,6 +825,7 @@ function renderTable() {
       <td style="font-weight:600;max-width:280px">${c.ten_cong_trinh}</td>
       <td style="font-size:12px;color:var(--gray-600)">${c.chu_dau_tu||'—'}</td>
       <td>${badgeHTML(c.trang_thai_tong)}</td>
+      <td id="pc-cell-${c.id}"><span class="pc-unassigned">—</span></td>
       <td style="font-size:12px;color:var(--gray-400)">${fmtDate(c.ngay_cap_nhat)}</td>
       <td>
         <div style="display:flex;gap:6px">
@@ -798,6 +835,8 @@ function renderTable() {
         </div>
       </td>
     </tr>`).join('');
+  // Load avatar phân công cho từng CT
+  rows.forEach(c => hienThiPhanCongBang(c.id, document.getElementById('pc-cell-'+c.id)));
 }
 
 function openModalCT(id=null) {
@@ -884,6 +923,24 @@ async function openDetail(id) {
       </div>
       <div style="margin-top:12px">${badgeHTML(ct.trang_thai_tong)}</div>
     </div>
+    <div id="pc-panel" class="pc-panel">
+      <div class="pc-panel-header" onclick="togglePcPanel()">
+        <h4>👥 Phân công theo dõi công trình này</h4>
+        <span id="pc-panel-toggle-icon">▼</span>
+      </div>
+      <div class="pc-panel-body" id="pc-panel-body">
+        <ul class="pc-list" id="pc-list"><li class="pc-empty-msg">Đang tải...</li></ul>
+        <div class="pc-add-form" id="pc-add-form" style="display:none;">
+          <select id="pc-select-user"><option value="">-- Chọn người dùng --</option></select>
+          <select id="pc-select-role">
+            <option value="thuc_hien">Thực hiện</option>
+            <option value="tong_hop">Tổng hợp</option>
+            <option value="theo_doi">Theo dõi</option>
+          </select>
+          <button class="pc-add-btn" id="pc-add-btn" onclick="themPhanCong()">+ Phân công</button>
+        </div>
+      </div>
+    </div>
     <div class="detail-body">
       ${ct.ghi_chu?`<div class="section-title">📝 Ghi chú chung</div><p style="font-size:13px;color:var(--gray-600);line-height:1.7">${ct.ghi_chu}</p>`:''}
       <div class="section-title">📅 Diễn biến / Tiến độ (${dbs?dbs.length:0})</div>
@@ -893,6 +950,8 @@ async function openDetail(id) {
   document.getElementById('btn-add-db').style.display       = coQuyen ? 'flex' : 'none';
   document.getElementById('btn-khong-co-db').style.display  = coQuyen ? 'flex' : 'none';
   openModal('modal-detail');
+  // Khởi tạo panel phân công
+  await initPhanCong(id);
 }
 
 function renderXacNhanBox(d, ct) {
@@ -1167,8 +1226,18 @@ async function loadUsers() {
       <td>${badgeRole(u.vai_tro)}</td>
       <td style="font-size:12px;color:var(--gray-600)">${u.don_vi||'—'}</td>
       <td>${u.nhan_thong_bao!==false?'<span style="color:var(--teal)">✅ Bật</span>':'<span style="color:var(--gray-400)">❌ Tắt</span>'}</td>
+      <td id="upc-${u.user_id}"><span style="color:#bbb;font-size:12px">Đang tải...</span></td>
+      <td style="text-align:center">
+        <input type="checkbox" ${u.nhan_thong_bao_tong?'checked':''} title="Nhận email tổng hợp tất cả CT chưa cập nhật"
+          onchange="toggleChiDinhTong('${u.user_id}',this)" ${currentRole!=='Admin'?'disabled':''}>
+      </td>
       <td><button class="btn-icon del" onclick="deleteUser('${u.id}')">🗑</button></td>
     </tr>`).join('');
+  // Load phân công của từng user
+  data.forEach(u => loadPhanCongCuaUser(u.user_id, document.getElementById('upc-'+u.user_id)));
+  if (!data||!data.length) {
+    tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state"><p>Chưa có người dùng</p></div></td></tr>`;
+  }
 }
 
 function openModalUser() { openModal('modal-user'); }
@@ -1538,6 +1607,170 @@ function showToast(msg,type='') {
 document.querySelectorAll('.modal-backdrop').forEach(bd=>{
   bd.addEventListener('click',e=>{ if(e.target===bd) bd.classList.remove('open'); });
 });
+
+// ══ MODULE: PHÂN CÔNG CÔNG TRÌNH ══
+let _pcCongTrinhId = null;
+let _pcDanhSach    = [];
+let _pcTatCaUser   = [];
+let _pcPanelOpen   = true;
+
+function togglePcPanel() {
+  _pcPanelOpen = !_pcPanelOpen;
+  document.getElementById('pc-panel-body').classList.toggle('hidden', !_pcPanelOpen);
+  document.getElementById('pc-panel-toggle-icon').textContent = _pcPanelOpen ? '▼' : '▶';
+}
+
+async function initPhanCong(idCongTrinh) {
+  _pcCongTrinhId = idCongTrinh;
+  _pcDanhSach    = [];
+  _pcPanelOpen   = true;
+  const body = document.getElementById('pc-panel-body');
+  if (body) body.classList.remove('hidden');
+  const icon = document.getElementById('pc-panel-toggle-icon');
+  if (icon) icon.textContent = '▼';
+  const ul = document.getElementById('pc-list');
+  if (ul) ul.innerHTML = '<li class="pc-empty-msg">Đang tải...</li>';
+  const form = document.getElementById('pc-add-form');
+  if (form) form.style.display = 'none';
+  await Promise.all([
+    loadPhanCongCT(idCongTrinh),
+    loadTatCaUserChoDropdown(),
+  ]);
+  if (form) form.style.display = currentRole === 'Admin' ? 'flex' : 'none';
+}
+
+async function loadPhanCongCT(idCongTrinh) {
+  const { data, error } = await sb
+    .from('phan_cong')
+    .select('id, vai_tro_pc, user_id, phan_quyen!inner(email, ho_ten)')
+    .eq('id_cong_trinh', idCongTrinh)
+    .order('vai_tro_pc');
+  const ul = document.getElementById('pc-list');
+  if (error || !ul) return;
+  _pcDanhSach = data || [];
+  renderPcList();
+}
+
+function renderPcList() {
+  const ul = document.getElementById('pc-list');
+  if (!ul) return;
+  if (!_pcDanhSach.length) {
+    ul.innerHTML = '<li class="pc-empty-msg">Chưa phân công — email nhắc nhở gửi cho tài khoản chỉ định tổng.</li>';
+    return;
+  }
+  const roleLabel = { thuc_hien:'Thực hiện', tong_hop:'Tổng hợp', theo_doi:'Theo dõi' };
+  const isAdmin = currentRole === 'Admin';
+  ul.innerHTML = _pcDanhSach.map(pc => {
+    const pq = pc.phan_quyen;
+    const initials = (pq.ho_ten || pq.email).split(' ').filter(Boolean).slice(-2).map(w=>w[0].toUpperCase()).join('');
+    const removeBtn = isAdmin
+      ? `<button class="pc-remove-btn" onclick="xoaPhanCong('${pc.id}','${(pq.ho_ten||pq.email).replace(/'/g,"\\'")}')" title="Xóa phân công">✕</button>`
+      : '';
+    return `<li class="pc-item">
+      <div class="pc-avatar">${initials}</div>
+      <div class="pc-info">
+        <div class="pc-name">${pq.ho_ten||'—'}</div>
+        <div class="pc-email">${pq.email}</div>
+      </div>
+      <span class="pc-role-badge ${pc.vai_tro_pc}">${roleLabel[pc.vai_tro_pc]||pc.vai_tro_pc}</span>
+      ${removeBtn}
+    </li>`;
+  }).join('');
+}
+
+async function loadTatCaUserChoDropdown() {
+  if (!_pcTatCaUser.length) {
+    const { data } = await sb.from('phan_quyen')
+      .select('user_id, email, ho_ten, vai_tro')
+      .in('vai_tro', ['Admin','Editor'])
+      .order('ho_ten');
+    _pcTatCaUser = data || [];
+  }
+  renderDropdownUser();
+}
+
+function renderDropdownUser() {
+  const sel = document.getElementById('pc-select-user');
+  if (!sel) return;
+  const daCoIds = new Set(_pcDanhSach.map(p=>p.user_id));
+  const opts = _pcTatCaUser.filter(u=>!daCoIds.has(u.user_id))
+    .map(u=>`<option value="${u.user_id}">${u.ho_ten||u.email} (${u.email})</option>`).join('');
+  sel.innerHTML = opts
+    ? `<option value="">-- Chọn người dùng --</option>${opts}`
+    : `<option value="">-- Tất cả đã được phân công --</option>`;
+}
+
+async function themPhanCong() {
+  const userId = document.getElementById('pc-select-user').value;
+  const vaiTro = document.getElementById('pc-select-role').value;
+  const btn    = document.getElementById('pc-add-btn');
+  if (!userId) { showToast('Vui lòng chọn người dùng','error'); return; }
+  btn.disabled = true; btn.textContent = 'Đang lưu...';
+  const { error } = await sb.from('phan_cong').insert({
+    id_cong_trinh:   _pcCongTrinhId,
+    user_id:         userId,
+    vai_tro_pc:      vaiTro,
+    nguoi_phan_cong: currentUser.id,
+  });
+  btn.disabled = false; btn.textContent = '+ Phân công';
+  if (error) {
+    showToast(error.code==='23505'?'Người dùng đã được phân công rồi':'Lỗi: '+error.message,'error');
+    return;
+  }
+  await loadPhanCongCT(_pcCongTrinhId);
+  renderDropdownUser();
+  showToast('Đã phân công thành công','success');
+}
+
+async function xoaPhanCong(idPhanCong, tenNguoi) {
+  if (!confirm(`Bỏ phân công "${tenNguoi}" khỏi công trình này?`)) return;
+  const { error } = await sb.from('phan_cong').delete().eq('id', idPhanCong);
+  if (error) { showToast('Lỗi: '+error.message,'error'); return; }
+  await loadPhanCongCT(_pcCongTrinhId);
+  renderDropdownUser();
+  showToast('Đã xóa phân công','success');
+}
+
+async function hienThiPhanCongBang(idCongTrinh, cellEl) {
+  if (!cellEl) return;
+  const { data } = await sb.from('phan_cong')
+    .select('vai_tro_pc, phan_quyen!inner(ho_ten, email)')
+    .eq('id_cong_trinh', idCongTrinh)
+    .in('vai_tro_pc', ['thuc_hien','tong_hop'])
+    .limit(3);
+  if (!data || !data.length) {
+    cellEl.innerHTML = '<span class="pc-unassigned">Chưa phân</span>';
+    return;
+  }
+  const avatars = data.map(pc => {
+    const pq = pc.phan_quyen;
+    const initials = (pq.ho_ten||pq.email).split(' ').filter(Boolean).slice(-2).map(w=>w[0].toUpperCase()).join('');
+    return `<div class="pc-avatar-sm ${pc.vai_tro_pc}" title="${pq.ho_ten||pq.email}">${initials}</div>`;
+  }).join('');
+  cellEl.innerHTML = `<div class="pc-avatars">${avatars}</div>`;
+}
+
+async function loadPhanCongCuaUser(userId, containerEl) {
+  if (!containerEl) return;
+  const { data } = await sb.from('phan_cong')
+    .select('vai_tro_pc, cong_trinh!inner(ten_cong_trinh)')
+    .eq('user_id', userId);
+  if (!data || !data.length) {
+    containerEl.innerHTML = '<span style="color:#bbb;font-size:12px">Chưa có</span>';
+    return;
+  }
+  const tags = data.map(pc =>
+    `<span class="user-ct-tag ${pc.vai_tro_pc}" title="${pc.vai_tro_pc}">${pc.cong_trinh.ten_cong_trinh.substring(0,28)}${pc.cong_trinh.ten_cong_trinh.length>28?'…':''}</span>`
+  ).join('');
+  containerEl.innerHTML = `<div class="user-ct-list">${tags}</div>`;
+}
+
+async function toggleChiDinhTong(userId, checkbox) {
+  const val = checkbox.checked;
+  const { error } = await sb.from('phan_quyen').update({ nhan_thong_bao_tong: val }).eq('user_id', userId);
+  if (error) { showToast('Lỗi cập nhật: '+error.message,'error'); checkbox.checked = !val; }
+  else showToast(val?'Đã bật nhận tổng hợp':'Đã tắt nhận tổng hợp','success');
+}
 </script>
 </body>
 </html>
