@@ -250,6 +250,8 @@
   .user-ct-tag{font-size:11px;background:#eaf1f8;color:#1a5276;border-radius:10px;padding:2px 8px;border:1px solid #c5d9e8;}
   .user-ct-tag.tong_hop{background:#e8f4fd;border-color:#aed6f1;}
   .badge-tdt{display:inline-block;font-size:11px;background:#fef3cd;color:#856404;border:1px solid #ffc107;border-radius:10px;padding:1px 8px;margin-left:4px;vertical-align:middle;}
+  .pc-count-badge{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:500;color:#1a5276;background:#eaf1f8;border:1px solid #c5d9e8;border-radius:12px;padding:3px 10px;cursor:default;white-space:nowrap;}
+  .pc-count-badge:hover{background:#d4e6f5;border-color:#aed6f1;}
 </style>
 </head>
 <body>
@@ -1781,12 +1783,14 @@ async function loadPhanCongCuaUser(userId, containerEl) {
     .in('id', ctIds);
   const ctMap = {};
   (cts || []).forEach(c => { ctMap[c.id] = c.ten_cong_trinh; });
-  const tags = data.map(pc => {
-    const ten = ctMap[pc.id_cong_trinh] || pc.id_cong_trinh;
-    const tenNgan = ten.length > 28 ? ten.substring(0,28)+'…' : ten;
-    return `<span class="user-ct-tag ${pc.vai_tro_pc}" title="${ten}">${tenNgan}</span>`;
-  }).join('');
-  containerEl.innerHTML = `<div class="user-ct-list">${tags}</div>`;
+  const roleLabel = { thuc_hien:'Thực hiện', tong_hop:'Tổng hợp', theo_doi:'Theo dõi' };
+  const soLuong = data.length;
+  const tooltipLines = data.map(pc => {
+    const ten = ctMap[pc.id_cong_trinh] || '—';
+    const role = roleLabel[pc.vai_tro_pc] || pc.vai_tro_pc;
+    return `• ${ten} (${role})`;
+  }).join('\n');
+  containerEl.innerHTML = `<span class="pc-count-badge" title="${tooltipLines}">${soLuong} công trình</span>`;
 }
  
 async function toggleChiDinhTong(userId, checkbox) {
